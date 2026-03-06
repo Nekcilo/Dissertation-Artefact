@@ -19,10 +19,13 @@ public class Order : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MessageListener.ButtonPressed == true)
+        if (MessageListener != null)
         {
-            OrderLine1.text = ("Line 1: " + num++);
-            OrderLine2.text = ("Test 2: " + num++);
+            if (MessageListener.ButtonPressed == true)
+            {
+                OrderLine1.text = ("Line 1: " + num++);
+                OrderLine2.text = ("Test 2: " + num++);
+            }
         }
     }
 }
