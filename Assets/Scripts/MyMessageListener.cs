@@ -4,29 +4,37 @@ using UnityEngine;
 
 public class MyMessageListener : MonoBehaviour
 {
-    public bool ButtonPressed;
+    [SerializeField] public bool ButtonPressed;
+    [SerializeField] public int ButtonIdentifier;
 
-    // Use this for initialization
-    void Start()
-    {
-    }
-    // Update is called once per frame
-    void Update()
-    {
-    }
     // Invoked when a line of data is received from the serial device.
     void OnMessageArrived(string msg)
     {
-        float Text = float.Parse(msg);
+        //string Text = msg;
 
-        if (Text == 0)
-        {
-            ButtonPressed = true;
-        }
-        if (Text == 1)
-        {
-            ButtonPressed = false;
-        }
+        //if (Text == "Button 1 Pushed")
+        //{
+        //    ButtonPressed = true;
+        //    ButtonIdentifier = 1;
+        //}
+        //if (Text == "Button 2 Pushed")
+        //{
+        //    ButtonPressed = true;
+        //    ButtonIdentifier = 2;
+        //}
+        //if (Text == "Button 3 Pushed")
+        //{
+        //    ButtonPressed = true;
+        //    ButtonIdentifier = 3;
+        //}
+        //if (Text == "All 3 Button Unpushed")
+        //{
+        //    ButtonPressed = false;
+        //}
+
+        int value = int.Parse(msg);
+
+        Debug.Log("Rotation: " + value*360/1023);
     }
     // Invoked when a connect/disconnect event occurs. The parameter 'success'
     // will be 'true' upon connection, and 'false' upon disconnection or
