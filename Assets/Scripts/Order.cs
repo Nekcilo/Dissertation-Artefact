@@ -15,25 +15,51 @@ public class Order : MonoBehaviour
     {
         if (MessageListener != null)
         {
-            if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 1)
-            {
-                OrderLine1.text = ("Line 1: " + num++);
-                Debug.Log("Button 1 Pressed");
-            }
-            if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 2)
-            {
-                OrderLine2.text = ("Line 2: " + num++);
-                Debug.Log("Button 2 Pressed");
-            }
-            if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 3)
-            {
-                //OrderLine3.text = ("Line 3: " + num++);
-                Debug.Log("Button 3 Pressed");
-            }
-            if (MessageListener.ButtonPressed == false)
-            {
-                //Debug.Log("No Button Pressed");
-            }
+            ButtonCheck(); 
+            Rotation();
         }
     }
+
+    void ButtonCheck()
+    {
+        if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 1)
+        {
+            Button1Func();
+        }
+        if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 2)
+        {
+            Button2Func();
+        }
+        if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 3)
+        {
+            Button3Func();
+        }
+        if (MessageListener.ButtonPressed == false)
+        {
+            //Debug.Log("No Button Pressed");
+        }
+    }
+
+    void Button1Func()
+    {
+        OrderLine1.text = ("Line 1: " + num++);
+        Debug.Log("Button 1 Pressed");
+    }
+
+    void Button2Func()
+    {
+        OrderLine2.text = ("Line 2: " + num++);
+        Debug.Log("Button 2 Pressed");
+    }
+
+    void Button3Func()
+    {
+        Debug.Log("Button 3 Pressed");
+    }
+
+    void Rotation()
+    {
+        Debug.Log("Rotation: " + MessageListener.RawRotation * 360 / 1023);
+    }
+
 }
