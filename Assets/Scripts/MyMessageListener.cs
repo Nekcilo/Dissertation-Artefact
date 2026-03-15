@@ -47,8 +47,7 @@ public class MyMessageListener : MonoBehaviour
             int length = msg.Length - 7;
             NFCID = int.Parse(msg.Substring(7, length));
         }
-
-        if (msg.Substring(0, 9) == "Rotation:")
+        else if (msg.Substring(0, 9) == "Rotation:")
         {
             int length = msg.Length - 9;
            RawRotation = int.Parse(msg.Substring(9, length));
