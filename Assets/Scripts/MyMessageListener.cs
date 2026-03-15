@@ -42,16 +42,16 @@ public class MyMessageListener : MonoBehaviour
     
     void Detector(string msg)
     {
+        if (msg.Substring(0, 7) == "NFC ID:")
+        {
+            int length = msg.Length - 7;
+            NFCID = int.Parse(msg.Substring(7, length));
+        }
+
         if (msg.Substring(0, 9) == "Rotation:")
         {
             int length = msg.Length - 9;
            RawRotation = int.Parse(msg.Substring(9, length));
-        }
-
-        if (msg.Substring(0, 7) == "NFC ID:")
-        {
-            int length = msg.Length - 7;
-            NFCID = int.Parse(msg.Substring(9, length));
         }
     }
 
