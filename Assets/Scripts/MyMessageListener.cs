@@ -12,7 +12,7 @@ public class MyMessageListener : MonoBehaviour
     void OnMessageArrived(string msg)
     {
         ButtonDetection(msg);
-        RotationDetection(int.Parse(msg));
+        RotationDetection(int.Parse(msg)); //Not working
     }
 
     void ButtonDetection(string msg)

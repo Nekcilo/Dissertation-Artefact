@@ -43,13 +43,13 @@ public class Order : MonoBehaviour
     void Button1Func()
     {
         OrderLine1.text = ("Line 1: " + num++);
-        Debug.Log("Button 1 Pressed");
+        //Debug.Log("Button 1 Pressed");
     }
 
     void Button2Func()
     {
         OrderLine2.text = ("Line 2: " + num++);
-        Debug.Log("Button 2 Pressed");
+        //Debug.Log("Button 2 Pressed");
     }
 
     void Button3Func()
