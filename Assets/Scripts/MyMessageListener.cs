@@ -7,44 +7,52 @@ public class MyMessageListener : MonoBehaviour
     [SerializeField] public bool ButtonPressed;
     [SerializeField] public int ButtonIdentifier;
     [SerializeField] public int RawRotation;
+    [SerializeField] public int NFCID;
 
     // Invoked when a line of data is received from the serial device.
     void OnMessageArrived(string msg)
     {
-        ButtonDetection(msg);
-        RotationDetection(int.Parse(msg)); //Not working
+        switch (msg)
+        {
+            case "Button 1 Pushed":
+                ButtonPressed = true;
+                ButtonIdentifier = 1;
+                break;
+
+            case "Button 2 Pushed":
+                ButtonPressed = true;
+                ButtonIdentifier = 2;
+                break;
+
+            case "Button 3 Pushed":
+                ButtonPressed = true;
+                ButtonIdentifier = 3;
+                break;
+
+            case "All 3 Button Unpushed":
+                ButtonPressed = false;
+                break;
+
+            default:
+                Detector(msg);
+                //RawRotation = int.Parse(msg);
+                break;
+        }
     }
-
-    void ButtonDetection(string msg)
+    
+    void Detector(string msg)
     {
-        string Text = msg;
+        if (msg.Substring(0, 9) == "Rotation:")
+        {
+            int length = msg.Length - 9;
+           RawRotation = int.Parse(msg.Substring(9, length));
+        }
 
-        if (Text == "Button 1 Pushed")
+        if (msg.Substring(0, 7) == "NFC ID:")
         {
-            ButtonPressed = true;
-            ButtonIdentifier = 1;
+            int length = msg.Length - 7;
+            NFCID = int.Parse(msg.Substring(9, length));
         }
-        if (Text == "Button 2 Pushed")
-        {
-            ButtonPressed = true;
-            ButtonIdentifier = 2;
-        }
-        if (Text == "Button 3 Pushed")
-        {
-            ButtonPressed = true;
-            ButtonIdentifier = 3;
-        }
-        if (Text == "All 3 Button Unpushed")
-        {
-            ButtonPressed = false;
-        }
-    }
-
-    void RotationDetection(int msg)
-    {
-        int value = msg;
-
-        RawRotation = value;
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'

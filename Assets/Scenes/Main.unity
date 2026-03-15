@@ -651,6 +651,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd774138faef89840a4e66fb9c73f934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ButtonPressed: 0
+  ButtonIdentifier: 0
+  RawRotation: 0
 --- !u!114 &1152397167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,7 +669,7 @@ MonoBehaviour:
   portName: COM3
   baudRate: 9600
   messageListener: {fileID: 1152397163}
-  reconnectionDelay: 1000
+  reconnectionDelay: 200
   maxUnreadMessages: 1
 --- !u!1 &1276938854
 GameObject:

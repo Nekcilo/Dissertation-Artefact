@@ -17,6 +17,7 @@ public class Order : MonoBehaviour
         {
             ButtonCheck(); 
             Rotation();
+            NFC();
         }
     }
 
@@ -59,7 +60,12 @@ public class Order : MonoBehaviour
 
     void Rotation()
     {
-        Debug.Log("Rotation: " + MessageListener.RawRotation * 360 / 1023);
+        Debug.Log("Rotation: " + ((MessageListener.RawRotation * 360) / 1023));
+    }
+
+    void NFC()
+    {
+        Debug.Log("NFC ID: " + MessageListener.NFCID);
     }
 
 }
