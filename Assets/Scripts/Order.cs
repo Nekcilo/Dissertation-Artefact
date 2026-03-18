@@ -1,71 +1,314 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Order : MonoBehaviour
 {
+    //Order Arrays
+    string[] DrinkOrder = { "Black Tea", "Milk Tea", "Iced Black Tea", "Iced Milk Tea", "Black Coffee", "White Coffee", "Iced Black Coffee", "Iced White Coffee", "Hot Chocolate", "Iced Chocolate Milk", "Chocolate Milk" };
+
+    //Selection Arrays
+    string[] VesselSelection = { "None", "Mug", "Cup"};
+    string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
+    string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
+
+    //Required Values
+    string RequiredVessel;
+    string RequiredIngredient;
+    string RequiredLiquid;
+
+    //DebugText
+    [SerializeField] TMP_Text DebugText1; //Vessel
+    [SerializeField] TMP_Text DebugText2; //Ingredient
+    [SerializeField] TMP_Text DebugText3; //Liquid
+    [SerializeField] TMP_Text DebugText4; //Rotation
+
+    //Object References
     [SerializeField] TMP_Text OrderLine1;
     [SerializeField] TMP_Text OrderLine2;
-    [SerializeField] MyMessageListener MessageListener;
-    int num;
+    [SerializeField] RawImage Image;
 
-    // Update is called once per frame
-    void Update()
+    //Private
+    string CustOrder;
+    int RotValue;
+    string SelectedVessel;
+    string SelectedIngredient;
+
+    private void Start()
     {
-        if (MessageListener != null)
-        {
-            ButtonCheck(); 
-            Rotation();
-            NFC();
+        CustOrder = DrinkOrder[Random.Range(0, DrinkOrder.Length)];
+        CustomerOrder();
+    }
+
+    void CustomerOrder()
+    {
+        int Rnd;
+
+        switch (CustOrder)
+        {    
+            case "Black Tea":
+                //  Mug + Tea bag + Water = Black Tea
+                RequiredVessel = VesselSelection[1];
+                RequiredIngredient = IngredientSelection[1];
+                RequiredLiquid = LiquidSelection[1];
+                
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Milk Tea":
+                Rnd = Random.Range(0, 1);
+
+                RequiredVessel = VesselSelection[1];
+                RequiredIngredient = IngredientSelection[1];
+
+                if (Rnd == 0)
+                {
+                    //  Mug + Tea bag + Cow Milk = Milk Tea
+                    RequiredLiquid = LiquidSelection[2];
+                }
+                else if (Rnd == 1)
+                {
+                    //  Mug + Tea bag + Oat Milk = Milk Tea
+                    RequiredLiquid = LiquidSelection[3];
+                }
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Iced Black Tea":
+                //  Cup + Tea bag + Water = Iced Black Tea
+                RequiredVessel = VesselSelection[2];
+                RequiredIngredient = IngredientSelection[1];
+                RequiredLiquid = LiquidSelection[1];
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Iced Milk Tea":
+                Rnd = Random.Range(0, 1);
+
+                RequiredVessel = VesselSelection[2];
+                RequiredIngredient = IngredientSelection[1];
+
+                if (Rnd == 0)
+                {
+                    //  Cup + Tea bag + Cow Milk = Iced Milk Tea
+                    RequiredLiquid = LiquidSelection[2];
+                }
+                else if (Rnd == 1)
+                {
+                    //  Cup + Tea bag + Oat Milk = Iced Milk Tea
+                    RequiredLiquid = LiquidSelection[3];
+                }
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Black Coffee":
+                //  Mug + Coffee + Water = Black Coffee
+                RequiredVessel = VesselSelection[1];
+                RequiredIngredient = IngredientSelection[2];
+                RequiredLiquid = LiquidSelection[1];
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "White Coffee":
+                Rnd = Random.Range(0, 1);
+
+                RequiredVessel = VesselSelection[1];
+                RequiredIngredient = IngredientSelection[2];
+
+                if (Rnd == 0)
+                {
+                    //  Mug + Coffee + Cow Milk = White Coffee
+                    RequiredLiquid = LiquidSelection[2];
+                }
+                else if (Rnd == 1)
+                {
+                    //  Mug + Coffee + Oat Milk = White Coffee
+                    RequiredLiquid = LiquidSelection[3];
+                }
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Iced Black Coffee":
+                //  Cup + Coffee + Water = Iced Black Coffee
+                RequiredVessel = VesselSelection[2];
+                RequiredIngredient = IngredientSelection[2];
+                RequiredLiquid = LiquidSelection[1];
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Iced White Coffee":
+                Rnd = Random.Range(0, 1);
+
+                RequiredVessel = VesselSelection[2];
+                RequiredIngredient = IngredientSelection[2];
+
+                if (Rnd == 0)
+                {
+                    //  Cup + Coffee + Cow Milk = Iced White Coffee
+
+                    RequiredLiquid = LiquidSelection[2];
+                }
+                else if (Rnd == 1)
+                {
+                    //  Cup + Coffee + Oat Milk = Iced White Coffee
+                    RequiredLiquid = LiquidSelection[3];
+                }
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Hot Chocolate":
+                Rnd = Random.Range(0, 2);
+
+                RequiredVessel = VesselSelection[1];
+                RequiredIngredient = IngredientSelection[3];
+
+                if (Rnd == 0)
+                {
+                    //  Mug + Chocolate + Water = Hot Chocolate
+                    RequiredLiquid = LiquidSelection[1];
+                }
+                else if (Rnd == 1)
+                {
+                    //  Mug + Chocolate + Cow Milk = Hot Chocolate
+                    RequiredLiquid = LiquidSelection[2];
+                }
+                else if (Rnd == 2)
+                {
+                    //  Mug + Chocolate + Oat Milk = Hot Chocolate
+                    RequiredLiquid = LiquidSelection[3];
+                }
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Iced Chocolate Milk":
+                //  Cup + Chocolate + Water = Iced Chocolate Milk
+                RequiredVessel = VesselSelection[2];
+                RequiredIngredient = IngredientSelection[3];
+                RequiredLiquid = LiquidSelection[1];
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            case "Chocolate Milk":
+                Rnd = Random.Range(0, 1);
+
+                RequiredVessel = VesselSelection[2];
+                RequiredIngredient = IngredientSelection[3];
+
+                if (Rnd == 0)
+                {
+                    //  Cup + Chocolate + Cow Milk = Chocolate Milk
+                    RequiredLiquid = LiquidSelection[2];
+                }
+                else if (Rnd == 1)
+                {
+                    //  Cup + Chocolate + Oat Milk = Chocolate Milk
+                    RequiredLiquid = LiquidSelection[3];
+                }
+
+                DisplayOrder(RequiredLiquid);
+                break;
+
+            default:
+                RequiredVessel = "None";
+                RequiredIngredient = "None";
+                RequiredLiquid = "None";
+                break;
         }
     }
 
-    void ButtonCheck()
+    void DisplayOrder(string Liquid)
     {
-        if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 1)
+        OrderLine1.text = CustOrder;
+
+        if (Liquid == LiquidSelection[1])
         {
-            Button1Func();
+            OrderLine2.text = "With Water";
         }
-        if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 2)
+        else if (Liquid == LiquidSelection[2])
         {
-            Button2Func();
+            OrderLine2.text = "With Cows Milk";
         }
-        if (MessageListener.ButtonPressed == true && MessageListener.ButtonIdentifier == 3)
+        else if (Liquid == LiquidSelection[3])
         {
-            Button3Func();
-        }
-        if (MessageListener.ButtonPressed == false)
-        {
-            //Debug.Log("No Button Pressed");
+            OrderLine2.text = "With Oat Milk";
         }
     }
 
-    void Button1Func()
+    public void ButtonCheck(bool ButtonPressed, int ButtonIdentifier)
     {
-        OrderLine1.text = ("Line 1: " + num++);
-        //Debug.Log("Button 1 Pressed");
+        DebugText3.text = (LiquidSelection[ButtonIdentifier]);
+
+        if (LiquidSelection[ButtonIdentifier] == RequiredLiquid)
+        {
+            Debug.Log("Correct Liquid");
+        }
     }
 
-    void Button2Func()
+    public void Rotation(int RawRotation)
     {
-        OrderLine2.text = ("Line 2: " + num++);
-        //Debug.Log("Button 2 Pressed");
+        RotValue = (RawRotation * 360) / 1023;
+        Image.transform.rotation = Quaternion.Euler(0f, 0f, RotValue);
+        DebugText4.text = (RotValue.ToString());
     }
 
-    void Button3Func()
+    public void NFC(int NFCID)
     {
-        Debug.Log("Button 3 Pressed");
-    }
+        Debug.Log("NFC ID: " + NFCID);
 
-    void Rotation()
-    {
-        Debug.Log("Rotation: " + ((MessageListener.RawRotation * 360) / 1023));
-    }
+        switch (NFCID)
+        {
+            case 1:
+                //Mug
+                SelectedVessel = VesselSelection[1];
+                break;
 
-    void NFC()
-    {
-        Debug.Log("NFC ID: " + MessageListener.NFCID);
+            case 2:
+                //Cup
+                SelectedVessel = VesselSelection[2];
+                break;
+
+            case 3:
+                //Tea Bag
+                SelectedIngredient = IngredientSelection[1];
+                break;
+            
+            case 4:
+                //Coffee
+                SelectedIngredient = IngredientSelection[2];
+                break;
+
+            case 5:
+                //Chocolate
+                SelectedIngredient = IngredientSelection[3];
+                break;
+
+            default:
+                //Nothing Detected
+                SelectedVessel = VesselSelection[0];
+                SelectedIngredient = IngredientSelection[0];
+                break;
+        }
+
+        if (SelectedVessel == RequiredVessel)
+        {
+            Debug.Log("Correct Vessel");
+        }
+        if (SelectedIngredient == RequiredIngredient)
+        {
+            Debug.Log("Correct Ingredient");
+        }
+
     }
 
 }

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class MyMessageListener : MonoBehaviour
 {
+    //Public Variables
     [SerializeField] public bool ButtonPressed;
     [SerializeField] public int ButtonIdentifier;
     [SerializeField] public int RawRotation;
     [SerializeField] public int NFCID;
+
+    //Script References
+    [SerializeField] Order OrderScript;
 
     // Invoked when a line of data is received from the serial device.
     void OnMessageArrived(string msg)
@@ -17,25 +21,28 @@ public class MyMessageListener : MonoBehaviour
             case "Button 1 Pushed":
                 ButtonPressed = true;
                 ButtonIdentifier = 1;
+                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
 
             case "Button 2 Pushed":
                 ButtonPressed = true;
                 ButtonIdentifier = 2;
+                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
 
             case "Button 3 Pushed":
                 ButtonPressed = true;
                 ButtonIdentifier = 3;
+                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
 
             case "All 3 Button Unpushed":
                 ButtonPressed = false;
+                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
 
             default:
                 Detector(msg);
-                //RawRotation = int.Parse(msg);
                 break;
         }
     }
@@ -46,11 +53,14 @@ public class MyMessageListener : MonoBehaviour
         {
             int length = msg.Length - 7;
             NFCID = int.Parse(msg.Substring(7, length));
+            OrderScript.NFC(NFCID);
         }
+        
         else if (msg.Substring(0, 9) == "Rotation:")
         {
             int length = msg.Length - 9;
-           RawRotation = int.Parse(msg.Substring(9, length));
+            RawRotation = int.Parse(msg.Substring(9, length));
+            OrderScript.Rotation(RawRotation);
         }
     }
 
