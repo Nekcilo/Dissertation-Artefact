@@ -8,7 +8,7 @@ public class MyMessageListener : MonoBehaviour
     [SerializeField] public bool ButtonPressed;
     [SerializeField] public int ButtonIdentifier;
     [SerializeField] public int RawRotation;
-    [SerializeField] public int NFCID;
+    [SerializeField] public string NFCID;
 
     //Script References
     [SerializeField] Order OrderScript;
@@ -49,18 +49,18 @@ public class MyMessageListener : MonoBehaviour
     
     void Detector(string msg)
     {
-        if (msg.Substring(0, 7) == "NFC ID:")
-        {
-            int length = msg.Length - 7;
-            NFCID = int.Parse(msg.Substring(7, length));
-            OrderScript.NFC(NFCID);
-        }
-        
-        else if (msg.Substring(0, 9) == "Rotation:")
+      
+        if (msg.Substring(0, 9) == "Rotation:")
         {
             int length = msg.Length - 9;
             RawRotation = int.Parse(msg.Substring(9, length));
             OrderScript.Rotation(RawRotation);
+        }
+        else if (msg.Substring(0, 14) == "RFID Tag UID: ")
+        {
+            int length = msg.Length - 14;
+            NFCID = msg.Substring(14, length);
+            OrderScript.NFC(NFCID);
         }
     }
 

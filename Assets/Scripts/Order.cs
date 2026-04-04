@@ -262,33 +262,33 @@ public class Order : MonoBehaviour
         DebugText4.text = (RotValue.ToString());
     }
 
-    public void NFC(int NFCID)
+    public void NFC(string NFCID)
     {
         Debug.Log("NFC ID: " + NFCID);
 
         switch (NFCID)
         {
-            case 1:
+            case "":
                 //Mug
                 SelectedVessel = VesselSelection[1];
                 break;
 
-            case 2:
+            case " ":
                 //Cup
                 SelectedVessel = VesselSelection[2];
                 break;
 
-            case 3:
+            case "04 0D 66 4C 9E 61 80":
                 //Tea Bag
                 SelectedIngredient = IngredientSelection[1];
                 break;
             
-            case 4:
+            case "04 39 46 4C 9E 61 80":
                 //Coffee
                 SelectedIngredient = IngredientSelection[2];
                 break;
 
-            case 5:
+            case "04 5A 45 4C 9E 61 80":
                 //Chocolate
                 SelectedIngredient = IngredientSelection[3];
                 break;
@@ -308,6 +308,9 @@ public class Order : MonoBehaviour
         {
             Debug.Log("Correct Ingredient");
         }
+
+        DebugText1.text = (SelectedVessel);
+        DebugText2.text = (SelectedIngredient);
 
     }
 
