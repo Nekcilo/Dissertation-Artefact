@@ -79,38 +79,8 @@ public class Order : MonoBehaviour
                 DisplayOrder(RequiredLiquid);
                 break;
 
-            //case "Iced Black Tea":
-            //    //  Cup + Tea bag + Water = Iced Black Tea
-            //    RequiredVessel = VesselSelection[2];
-            //    RequiredIngredient = IngredientSelection[1];
-            //    RequiredLiquid = LiquidSelection[1];
-
-            //    DisplayOrder(RequiredLiquid);
-            //    break;
-
-            //case "Iced Milk Tea":
-            //    Rnd = Random.Range(0, 1);
-
-            //    RequiredVessel = VesselSelection[2];
-            //    RequiredIngredient = IngredientSelection[1];
-
-            //    if (Rnd == 0)
-            //    {
-            //        //  Cup + Tea bag + Cow Milk = Iced Milk Tea
-            //        RequiredLiquid = LiquidSelection[2];
-            //    }
-            //    else if (Rnd == 1)
-            //    {
-            //        //  Cup + Tea bag + Oat Milk = Iced Milk Tea
-            //        RequiredLiquid = LiquidSelection[3];
-            //    }
-
-            //    DisplayOrder(RequiredLiquid);
-            //    break;
-
             case "Black Coffee":
                 //  Mug + Coffee + Water = Black Coffee
-                //RequiredVessel = VesselSelection[1];
                 RequiredIngredient = IngredientSelection[2];
                 RequiredLiquid = LiquidSelection[1];
 
@@ -120,7 +90,6 @@ public class Order : MonoBehaviour
             case "White Coffee":
                 Rnd = Random.Range(0, 1);
 
-                //RequiredVessel = VesselSelection[1];
                 RequiredIngredient = IngredientSelection[2];
 
                 if (Rnd == 0)
@@ -137,40 +106,9 @@ public class Order : MonoBehaviour
                 DisplayOrder(RequiredLiquid);
                 break;
 
-            //case "Iced Black Coffee":
-            //    //  Cup + Coffee + Water = Iced Black Coffee
-            //    RequiredVessel = VesselSelection[2];
-            //    RequiredIngredient = IngredientSelection[2];
-            //    RequiredLiquid = LiquidSelection[1];
-
-            //    DisplayOrder(RequiredLiquid);
-            //    break;
-
-            //case "Iced White Coffee":
-            //    Rnd = Random.Range(0, 1);
-
-            //    RequiredVessel = VesselSelection[2];
-            //    RequiredIngredient = IngredientSelection[2];
-
-            //    if (Rnd == 0)
-            //    {
-            //        //  Cup + Coffee + Cow Milk = Iced White Coffee
-
-            //        RequiredLiquid = LiquidSelection[2];
-            //    }
-            //    else if (Rnd == 1)
-            //    {
-            //        //  Cup + Coffee + Oat Milk = Iced White Coffee
-            //        RequiredLiquid = LiquidSelection[3];
-            //    }
-
-            //    DisplayOrder(RequiredLiquid);
-            //    break;
-
             case "Hot Chocolate":
                 Rnd = Random.Range(0, 2);
 
-                //RequiredVessel = VesselSelection[1];
                 RequiredIngredient = IngredientSelection[3];
 
                 if (Rnd == 0)
@@ -192,37 +130,7 @@ public class Order : MonoBehaviour
                 DisplayOrder(RequiredLiquid);
                 break;
 
-            //case "Iced Chocolate Milk":
-            //    //  Cup + Chocolate + Water = Iced Chocolate Milk
-            //    RequiredVessel = VesselSelection[2];
-            //    RequiredIngredient = IngredientSelection[3];
-            //    RequiredLiquid = LiquidSelection[1];
-
-            //    DisplayOrder(RequiredLiquid);
-            //    break;
-
-            //case "Chocolate Milk":
-            //    Rnd = Random.Range(0, 1);
-
-            //    RequiredVessel = VesselSelection[2];
-            //    RequiredIngredient = IngredientSelection[3];
-
-            //    if (Rnd == 0)
-            //    {
-            //        //  Cup + Chocolate + Cow Milk = Chocolate Milk
-            //        RequiredLiquid = LiquidSelection[2];
-            //    }
-            //    else if (Rnd == 1)
-            //    {
-            //        //  Cup + Chocolate + Oat Milk = Chocolate Milk
-            //        RequiredLiquid = LiquidSelection[3];
-            //    }
-
-            //    DisplayOrder(RequiredLiquid);
-            //    break;
-
             default:
-                //RequiredVessel = "None";
                 RequiredIngredient = "None";
                 RequiredLiquid = "None";
                 break;
@@ -250,12 +158,16 @@ public class Order : MonoBehaviour
     public void ButtonCheck(bool ButtonPressed, int ButtonIdentifier)
     {
         DebugText3.text = (LiquidSelection[ButtonIdentifier]);
-        SelectedLiquid = LiquidSelection[ButtonIdentifier];
-
-        if (LiquidSelection[ButtonIdentifier] == RequiredLiquid)
+        
+        if (RotValue !<= 0)
         {
-            Debug.Log("Correct Liquid");
+            SelectedLiquid = LiquidSelection[ButtonIdentifier];
         }
+
+        //if (LiquidSelection[ButtonIdentifier] == RequiredLiquid)
+        //{
+        //    Debug.Log("Correct Liquid");
+        //}
     }
 
     public void NFC(string NFCID)
@@ -264,15 +176,6 @@ public class Order : MonoBehaviour
 
         switch (NFCID)
         {
-            //case "":
-            //    //Mug
-            //    SelectedVessel = VesselSelection[1];
-            //    break;
-
-            //case " ":
-            //    //Cup
-            //    SelectedVessel = VesselSelection[2];
-            //    break;
 
             case "04 0D 66 4C 9E 61 80":
                 //Tea Bag
@@ -291,19 +194,14 @@ public class Order : MonoBehaviour
 
             default:
                 //Nothing Detected
-                //SelectedVessel = VesselSelection[0];
                 SelectedIngredient = IngredientSelection[0];
                 break;
         }
 
-        //if (SelectedVessel == RequiredVessel)
+        //if (SelectedIngredient == RequiredIngredient)
         //{
-        //    Debug.Log("Correct Vessel");
+        //    Debug.Log("Correct Ingredient");
         //}
-        if (SelectedIngredient == RequiredIngredient)
-        {
-            Debug.Log("Correct Ingredient");
-        }
 
         //DebugText1.text = (SelectedVessel);
         DebugText2.text = (SelectedIngredient);
@@ -317,6 +215,20 @@ public class Order : MonoBehaviour
             RotValue = (RawRotation * 360) / 1023;
             Image.transform.rotation = Quaternion.Euler(0f, 0f, RotValue);
             DebugText4.text = (RotValue.ToString());
+
+            //if cupfull
+            //{
+                DrinkCheck();
+            //}
+        }
+    }
+
+    void DrinkCheck()
+    {
+        if (SelectedIngredient == RequiredIngredient && SelectedLiquid == RequiredLiquid)
+        { 
+            Debug.Log("Correct Liquid");
+            Debug.Log("Correct Ingredient");
         }
     }
 

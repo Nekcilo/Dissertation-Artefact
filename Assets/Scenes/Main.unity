@@ -1247,7 +1247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b524c87e911594f921e7c7253158c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugText1: {fileID: 190039179}
   DebugText2: {fileID: 691480085}
   DebugText3: {fileID: 95622197}
   DebugText4: {fileID: 1095021977}
@@ -1283,7 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portName: COM5
+  portName: COM3
   baudRate: 9600
   messageListener: {fileID: 1152397163}
   reconnectionDelay: 200
