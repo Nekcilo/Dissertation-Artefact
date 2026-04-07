@@ -36,10 +36,10 @@ public class MyMessageListener : MonoBehaviour
                 OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
 
-            case "All 3 Button Unpushed":
-                ButtonPressed = false;
-                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
-                break;
+            //case "All 3 Button Unpushed":
+            //    ButtonPressed = false;
+            //    OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
+            //    break;
 
             default:
                 Detector(msg);

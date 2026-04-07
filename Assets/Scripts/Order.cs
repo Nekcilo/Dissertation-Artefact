@@ -7,21 +7,17 @@ using UnityEngine.UI;
 public class Order : MonoBehaviour
 {
     //Order Arrays
-    //string[] DrinkOrder = { "Black Tea", "Milk Tea", "Iced Black Tea", "Iced Milk Tea", "Black Coffee", "White Coffee", "Iced Black Coffee", "Iced White Coffee", "Hot Chocolate", "Iced Chocolate Milk", "Chocolate Milk" };
     string[] DrinkOrder = {"Black Tea", "Milk Tea", "Black Coffee", "White Coffee", "Hot Chocolate", "Chocolate Milk"};
 
     //Selection Arrays
-    //string[] VesselSelection = { "None", "Mug", "Cup" };
     string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
     string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
 
     //Required Values
-    //string RequiredVessel;
     string RequiredIngredient;
     string RequiredLiquid;
 
     //DebugText
-    //[SerializeField] TMP_Text DebugText1; //Vessel
     [SerializeField] TMP_Text DebugText2; //Ingredient
     [SerializeField] TMP_Text DebugText3; //Liquid
     [SerializeField] TMP_Text DebugText4; //Rotation
@@ -34,12 +30,15 @@ public class Order : MonoBehaviour
     //Private
     string CustOrder;
     int RotValue;
-    //string SelectedVessel;
     string SelectedIngredient;
     string SelectedLiquid;
+    bool LiquidPoured = false;
 
     private void Start()
     {
+        SelectedIngredient = IngredientSelection[0];
+        SelectedLiquid = LiquidSelection[0];
+
         CustOrder = DrinkOrder[Random.Range(0, DrinkOrder.Length)];
         CustomerOrder();
     }
@@ -52,7 +51,6 @@ public class Order : MonoBehaviour
         {    
             case "Black Tea":
                 //  Mug + Tea bag + Water = Black Tea
-                //RequiredVessel = VesselSelection[1];
                 RequiredIngredient = IngredientSelection[1];
                 RequiredLiquid = LiquidSelection[1];
                 
@@ -62,7 +60,6 @@ public class Order : MonoBehaviour
             case "Milk Tea":
                 Rnd = Random.Range(0, 1);
 
-                //RequiredVessel = VesselSelection[1];
                 RequiredIngredient = IngredientSelection[1];
 
                 if (Rnd == 0)
@@ -156,11 +153,10 @@ public class Order : MonoBehaviour
     }
 
     public void ButtonCheck(bool ButtonPressed, int ButtonIdentifier)
-    {
-        DebugText3.text = (LiquidSelection[ButtonIdentifier]);
-        
-        if (RotValue !<= 0)
+    {             
+        if (!LiquidPoured)
         {
+            DebugText3.text = (LiquidSelection[ButtonIdentifier]);
             SelectedLiquid = LiquidSelection[ButtonIdentifier];
         }
 
@@ -174,37 +170,39 @@ public class Order : MonoBehaviour
     {
         Debug.Log("NFC ID: " + NFCID);
 
-        switch (NFCID)
-        {
+        if (!LiquidPoured)
+        {        
+            switch (NFCID)
+            {
 
-            case "04 0D 66 4C 9E 61 80":
-                //Tea Bag
-                SelectedIngredient = IngredientSelection[1];
-                break;
-            
-            case "04 39 46 4C 9E 61 80":
-                //Coffee
-                SelectedIngredient = IngredientSelection[2];
-                break;
+                case "04 0D 66 4C 9E 61 80":
+                    //Tea Bag
+                    SelectedIngredient = IngredientSelection[1];
+                    break;
 
-            case "04 5A 45 4C 9E 61 80":
-                //Chocolate
-                SelectedIngredient = IngredientSelection[3];
-                break;
+                case "04 39 46 4C 9E 61 80":
+                    //Coffee
+                    SelectedIngredient = IngredientSelection[2];
+                    break;
 
-            default:
-                //Nothing Detected
-                SelectedIngredient = IngredientSelection[0];
-                break;
+                case "04 5A 45 4C 9E 61 80":
+                    //Chocolate
+                    SelectedIngredient = IngredientSelection[3];
+                    break;
+
+                default:
+                    //Nothing Detected
+                    SelectedIngredient = IngredientSelection[0];
+                    break;
+            }
+
+            DebugText2.text = (SelectedIngredient);
         }
 
         //if (SelectedIngredient == RequiredIngredient)
         //{
         //    Debug.Log("Correct Ingredient");
         //}
-
-        //DebugText1.text = (SelectedVessel);
-        DebugText2.text = (SelectedIngredient);
 
     }
 
@@ -215,6 +213,11 @@ public class Order : MonoBehaviour
             RotValue = (RawRotation * 360) / 1023;
             Image.transform.rotation = Quaternion.Euler(0f, 0f, RotValue);
             DebugText4.text = (RotValue.ToString());
+
+            if (RotValue > 0)
+            {
+                LiquidPoured = true;
+            }
 
             //if cupfull
             //{
