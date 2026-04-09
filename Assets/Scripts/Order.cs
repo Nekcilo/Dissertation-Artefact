@@ -27,11 +27,15 @@ public class Order : MonoBehaviour
     [SerializeField] TMP_Text OrderLine2;
     [SerializeField] RawImage Image;
 
-    //Private
+    [SerializeField] PourDetector PourDetectorScript;
+
+    //Public Variables
+    [SerializeField] public int RotValue;
+    [SerializeField] public string SelectedLiquid;
+
+    //Private Variables
     string CustOrder;
-    int RotValue;
     string SelectedIngredient;
-    string SelectedLiquid;
     bool LiquidPoured = false;
 
     private void Start()
@@ -168,7 +172,7 @@ public class Order : MonoBehaviour
 
     public void NFC(string NFCID)
     {
-        Debug.Log("NFC ID: " + NFCID);
+        //Debug.Log("NFC ID: " + NFCID);
 
         if (!LiquidPoured)
         {        
@@ -214,14 +218,21 @@ public class Order : MonoBehaviour
             Image.transform.rotation = Quaternion.Euler(0f, 0f, RotValue);
             DebugText4.text = (RotValue.ToString());
 
-            if (RotValue > 0)
+            //5 = pour threshold;
+            if (RotValue > 5)
             {
                 LiquidPoured = true;
             }
+            else if (RotValue < 5)
+            {
+                LiquidPoured = false;
+            }
+
+            PourDetectorScript.PourCheck(LiquidPoured);
 
             //if cupfull
             //{
-                DrinkCheck();
+            DrinkCheck();
             //}
         }
     }
@@ -230,8 +241,8 @@ public class Order : MonoBehaviour
     {
         if (SelectedIngredient == RequiredIngredient && SelectedLiquid == RequiredLiquid)
         { 
-            Debug.Log("Correct Liquid");
-            Debug.Log("Correct Ingredient");
+            //Debug.Log("Correct Liquid");
+            //Debug.Log("Correct Ingredient");
         }
     }
 
