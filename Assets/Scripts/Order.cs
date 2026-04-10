@@ -27,7 +27,7 @@ public class Order : MonoBehaviour
     [SerializeField] TMP_Text OrderLine2;
     //[SerializeField] RawImage Image;
 
-    [SerializeField] PourDetector PourDetectorScript;
+    [SerializeField] Pouring PouringScript;
 
     //Public Variables
     [SerializeField] public int RotValue;
@@ -228,7 +228,7 @@ public class Order : MonoBehaviour
                 LiquidPoured = false;
             }
 
-            PourDetectorScript.PourCheck(LiquidPoured);
+            PouringScript.PourCheck(LiquidPoured);
 
             //if cupfull
             //{
