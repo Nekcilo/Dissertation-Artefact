@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0228c6b535390164cbbfce6ec260f395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PouringScript: {fileID: 1923004073}
+  orderScript: {fileID: 1152397165}
 --- !u!1 &190039177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,9 +1483,11 @@ MonoBehaviour:
   DebugText4: {fileID: 1095021977}
   OrderLine1: {fileID: 254483880}
   OrderLine2: {fileID: 2049262093}
-  PouringScript: {fileID: 1923004073}
+  CupAnimator: {fileID: 2114711021}
+  PourAnimator: {fileID: 107217091}
   RotValue: 0
   SelectedLiquid: 
+  drinkFull: 0
 --- !u!114 &1152397166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2283,13 +2285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b8ac15e2881214ab4ce0cdcbd8daed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PourOrigin: {fileID: 208483463}
-  LiquidPouring: {fileID: 107217087}
-  LiquidInCup: {fileID: 2114711018}
-  CupAnimator: {fileID: 2114711021}
-  PourAnimator: {fileID: 107217091}
-  Liquid: {fileID: 107217087}
-  AnimCheck: 0
+  drinkFull: 0
 --- !u!1 &2049262091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2433,6 +2429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114711019}
+  - component: {fileID: 2114711022}
   - component: {fileID: 2114711020}
   - component: {fileID: 2114711021}
   m_Layer: 0
@@ -2530,6 +2527,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2114711022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114711018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0228c6b535390164cbbfce6ec260f395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderScript: {fileID: 1152397165}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

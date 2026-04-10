@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class AnimTrigger : MonoBehaviour
 {
-    [SerializeField] Pouring PouringScript;
+    [SerializeField] Order orderScript;
 
-    public void Animation()
+    public void PourAnim()
     {
-        PouringScript.CupAnimator.SetBool("AnimIsPouring", true);
+        orderScript.CupAnimator.SetBool("AnimIsPouring", true);
+    }
+
+    public void DrinkFull()
+    {
+        orderScript.drinkFull = true;
+        orderScript.PourAnimator.SetBool("AnimIsPouring", false);
     }
 }

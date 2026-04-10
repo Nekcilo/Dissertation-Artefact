@@ -27,11 +27,16 @@ public class Order : MonoBehaviour
     [SerializeField] TMP_Text OrderLine2;
     //[SerializeField] RawImage Image;
 
-    [SerializeField] Pouring PouringScript;
+    //[SerializeField] Pouring PouringScript;
+
+    //Animator Referencees
+    [SerializeField] public Animator CupAnimator;
+    [SerializeField] public Animator PourAnimator;
 
     //Public Variables
     [SerializeField] public int RotValue;
     [SerializeField] public string SelectedLiquid;
+    public bool drinkFull = false;
 
     //Private Variables
     string CustOrder;
@@ -219,21 +224,16 @@ public class Order : MonoBehaviour
             DebugText4.text = (RotValue.ToString());
 
             //5 = pour threshold;
-            if (RotValue > 5)
+            if (RotValue > 5 && !drinkFull)
             {
                 LiquidPoured = true;
+                //PouringScript.PourCheck(LiquidPoured);
+                PourAnimator.SetBool("AnimIsPouring", true);
             }
-            else if (RotValue < 5)
+            if (drinkFull)
             {
-                LiquidPoured = false;
+                DrinkCheck();
             }
-
-            PouringScript.PourCheck(LiquidPoured);
-
-            //if cupfull
-            //{
-            DrinkCheck();
-            //}
         }
     }
 
@@ -241,8 +241,8 @@ public class Order : MonoBehaviour
     {
         if (SelectedIngredient == RequiredIngredient && SelectedLiquid == RequiredLiquid)
         { 
-            //Debug.Log("Correct Liquid");
-            //Debug.Log("Correct Ingredient");
+            Debug.Log("Correct Liquid");
+            Debug.Log("Correct Ingredient");
         }
     }
 
