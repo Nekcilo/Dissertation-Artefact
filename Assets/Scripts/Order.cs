@@ -7,15 +7,15 @@ using UnityEngine.UI;
 public class Order : MonoBehaviour
 {
     //Order Arrays
-    string[] DrinkOrder = {"Black Tea", "Milk Tea", "Black Coffee", "White Coffee", "Hot Chocolate", "Chocolate Milk"};
+    string[] DrinkOrder = {"Black Tea", "Milk Tea", "Black Coffee", "White Coffee", "Hot Chocolate"};
 
     //Selection Arrays
     string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
     string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
 
     //Required Values
-    string RequiredIngredient;
-    string RequiredLiquid;
+    [SerializeField] string RequiredIngredient;
+    [SerializeField] string RequiredLiquid;
 
     //DebugText
     [SerializeField] TMP_Text DebugText2; //Ingredient
@@ -25,34 +25,54 @@ public class Order : MonoBehaviour
     //Object References
     [SerializeField] TMP_Text OrderLine1;
     [SerializeField] TMP_Text OrderLine2;
-    //[SerializeField] RawImage Image;
-
-    //[SerializeField] Pouring PouringScript;
 
     //Animator Referencees
     [SerializeField] public Animator CupAnimator;
     [SerializeField] public Animator PourAnimator;
+    [SerializeField] public Animator FeedbackAnimator;
 
     //Public Variables
     [SerializeField] public int RotValue;
     [SerializeField] public string SelectedLiquid;
-    public bool drinkFull = false;
+    public bool drinkFull;
 
     //Private Variables
-    string CustOrder;
     string SelectedIngredient;
-    bool LiquidPoured = false;
+    bool LiquidPoured;
+    string PreviousIngredient;
+    string PreviousLiquid;
 
-    private void Start()
+    private void Awake()
     {
+        Reset();
+    }
+
+    public void Reset()
+    {
+        Debug.Log("Reset");
+
+        //Reset Variables
         SelectedIngredient = IngredientSelection[0];
         SelectedLiquid = LiquidSelection[0];
 
-        CustOrder = DrinkOrder[Random.Range(0, DrinkOrder.Length)];
-        CustomerOrder();
+        RequiredIngredient = IngredientSelection[0];
+        RequiredLiquid = LiquidSelection[0];
+
+        RotValue = 0;
+        drinkFull = false;
+        LiquidPoured = false;
+
+        //Reset Fill Animation
+        CupAnimator.SetBool("AnimIsPouring", false);
+
+        FeedbackAnimator.SetBool("Pos", false);
+        FeedbackAnimator.SetBool("Neg", false);
+
+        //New Order
+        CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
     }
 
-    void CustomerOrder()
+    void CustomerOrder(string CustOrder)
     {
         int Rnd;
 
@@ -62,8 +82,13 @@ public class Order : MonoBehaviour
                 //  Mug + Tea bag + Water = Black Tea
                 RequiredIngredient = IngredientSelection[1];
                 RequiredLiquid = LiquidSelection[1];
+
+                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                {
+                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
+                }
                 
-                DisplayOrder(RequiredLiquid);
+                DisplayOrder("Black Tea", RequiredLiquid);
                 break;
 
             case "Milk Tea":
@@ -82,7 +107,12 @@ public class Order : MonoBehaviour
                     RequiredLiquid = LiquidSelection[3];
                 }
 
-                DisplayOrder(RequiredLiquid);
+                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                {
+                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
+                }
+
+                DisplayOrder("Milk Tea", RequiredLiquid);
                 break;
 
             case "Black Coffee":
@@ -90,7 +120,12 @@ public class Order : MonoBehaviour
                 RequiredIngredient = IngredientSelection[2];
                 RequiredLiquid = LiquidSelection[1];
 
-                DisplayOrder(RequiredLiquid);
+                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                {
+                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
+                }
+
+                DisplayOrder("Black Coffee", RequiredLiquid);
                 break;
 
             case "White Coffee":
@@ -109,7 +144,12 @@ public class Order : MonoBehaviour
                     RequiredLiquid = LiquidSelection[3];
                 }
 
-                DisplayOrder(RequiredLiquid);
+                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                {
+                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
+                }
+
+                DisplayOrder("White Coffee", RequiredLiquid);
                 break;
 
             case "Hot Chocolate":
@@ -133,7 +173,12 @@ public class Order : MonoBehaviour
                     RequiredLiquid = LiquidSelection[3];
                 }
 
-                DisplayOrder(RequiredLiquid);
+                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                {
+                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
+                }
+
+                DisplayOrder("Hot Chocolate", RequiredLiquid);
                 break;
 
             default:
@@ -143,7 +188,7 @@ public class Order : MonoBehaviour
         }
     }
 
-    void DisplayOrder(string Liquid)
+    void DisplayOrder(string CustOrder, string Liquid)
     {
         OrderLine1.text = CustOrder;
 
@@ -159,6 +204,7 @@ public class Order : MonoBehaviour
         {
             OrderLine2.text = "With Oat Milk";
         }
+
     }
 
     public void ButtonCheck(bool ButtonPressed, int ButtonIdentifier)
@@ -168,16 +214,10 @@ public class Order : MonoBehaviour
             DebugText3.text = (LiquidSelection[ButtonIdentifier]);
             SelectedLiquid = LiquidSelection[ButtonIdentifier];
         }
-
-        //if (LiquidSelection[ButtonIdentifier] == RequiredLiquid)
-        //{
-        //    Debug.Log("Correct Liquid");
-        //}
     }
 
     public void NFC(string NFCID)
     {
-        //Debug.Log("NFC ID: " + NFCID);
 
         if (!LiquidPoured)
         {        
@@ -208,11 +248,6 @@ public class Order : MonoBehaviour
             DebugText2.text = (SelectedIngredient);
         }
 
-        //if (SelectedIngredient == RequiredIngredient)
-        //{
-        //    Debug.Log("Correct Ingredient");
-        //}
-
     }
 
     public void Rotation(int RawRotation)
@@ -220,14 +255,12 @@ public class Order : MonoBehaviour
         if (SelectedIngredient != "None" && SelectedLiquid != "None")
         {
             RotValue = (RawRotation * 360) / 1023;
-            //Image.transform.rotation = Quaternion.Euler(0f, 0f, RotValue);
             DebugText4.text = (RotValue.ToString());
 
             //5 = pour threshold;
             if (RotValue > 5 && !drinkFull)
             {
                 LiquidPoured = true;
-                //PouringScript.PourCheck(LiquidPoured);
                 PourAnimator.SetBool("AnimIsPouring", true);
             }
             if (drinkFull)
@@ -239,11 +272,21 @@ public class Order : MonoBehaviour
 
     void DrinkCheck()
     {
+
         if (SelectedIngredient == RequiredIngredient && SelectedLiquid == RequiredLiquid)
         { 
             Debug.Log("Correct Liquid");
             Debug.Log("Correct Ingredient");
+
+            FeedbackAnimator.SetBool("Pos", true);
         }
+        else
+        {
+            FeedbackAnimator.SetBool("Neg", true);
+        }
+
+        PreviousIngredient = RequiredIngredient;
+        PreviousLiquid = RequiredLiquid;
     }
 
 }

@@ -6,7 +6,7 @@ public class AnimTrigger : MonoBehaviour
 {
     [SerializeField] Order orderScript;
 
-    public void PourAnim()
+    public void EntryPourAnim()
     {
         orderScript.CupAnimator.SetBool("AnimIsPouring", true);
     }
@@ -15,5 +15,9 @@ public class AnimTrigger : MonoBehaviour
     {
         orderScript.drinkFull = true;
         orderScript.PourAnimator.SetBool("AnimIsPouring", false);
+    }
+    public void ExitPourAnim()
+    {
+        orderScript.Reset();
     }
 }
