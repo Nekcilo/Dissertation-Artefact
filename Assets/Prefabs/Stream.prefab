@@ -4851,7 +4851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5238570228697279503}
-  - component: {fileID: 3963656255617215251}
+  - component: {fileID: 7883312874608116583}
   - component: {fileID: 5238570228697279500}
   m_Layer: 0
   m_Name: Stream
@@ -4876,7 +4876,7 @@ Transform:
   - {fileID: 269008120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3963656255617215251
+--- !u!114 &7883312874608116583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4931,7 +4931,7 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 1, z: 0}
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3

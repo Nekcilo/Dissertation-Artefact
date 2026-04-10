@@ -25,7 +25,7 @@ public class Order : MonoBehaviour
     //Object References
     [SerializeField] TMP_Text OrderLine1;
     [SerializeField] TMP_Text OrderLine2;
-    [SerializeField] RawImage Image;
+    //[SerializeField] RawImage Image;
 
     [SerializeField] PourDetector PourDetectorScript;
 
@@ -215,7 +215,7 @@ public class Order : MonoBehaviour
         if (SelectedIngredient != "None" && SelectedLiquid != "None")
         {
             RotValue = (RawRotation * 360) / 1023;
-            Image.transform.rotation = Quaternion.Euler(0f, 0f, RotValue);
+            //Image.transform.rotation = Quaternion.Euler(0f, 0f, RotValue);
             DebugText4.text = (RotValue.ToString());
 
             //5 = pour threshold;

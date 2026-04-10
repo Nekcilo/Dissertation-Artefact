@@ -64,7 +64,6 @@ public class Stream : MonoBehaviour
 
     private Vector3 FindEndPoint()
     {
-
         RaycastHit hit;
         Ray ray = new Ray(transform.position, Vector3.down);
 
