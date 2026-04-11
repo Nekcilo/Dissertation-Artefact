@@ -83,7 +83,7 @@ public class Order : MonoBehaviour
                 RequiredIngredient = IngredientSelection[1];
                 RequiredLiquid = LiquidSelection[1];
 
-                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
                 {
                     CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
                 }
@@ -107,7 +107,7 @@ public class Order : MonoBehaviour
                     RequiredLiquid = LiquidSelection[3];
                 }
 
-                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
                 {
                     CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
                 }
@@ -120,7 +120,7 @@ public class Order : MonoBehaviour
                 RequiredIngredient = IngredientSelection[2];
                 RequiredLiquid = LiquidSelection[1];
 
-                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
                 {
                     CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
                 }
@@ -144,7 +144,7 @@ public class Order : MonoBehaviour
                     RequiredLiquid = LiquidSelection[3];
                 }
 
-                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
                 {
                     CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
                 }
@@ -173,7 +173,7 @@ public class Order : MonoBehaviour
                     RequiredLiquid = LiquidSelection[3];
                 }
 
-                if (PreviousIngredient == RequiredIngredient && PreviousLiquid == RequiredLiquid)
+                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
                 {
                     CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
                 }
