@@ -1457,6 +1457,8 @@ MonoBehaviour:
   DebugText4: {fileID: 1095021977}
   OrderLine1: {fileID: 254483880}
   OrderLine2: {fileID: 2049262093}
+  PourLiquid: {fileID: 107217089}
+  CupLiquid: {fileID: 2114711020}
   CupAnimator: {fileID: 2114711021}
   PourAnimator: {fileID: 107217091}
   FeedbackAnimator: {fileID: 924646028}

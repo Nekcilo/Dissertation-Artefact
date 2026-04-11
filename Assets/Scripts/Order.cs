@@ -26,6 +26,9 @@ public class Order : MonoBehaviour
     [SerializeField] TMP_Text OrderLine1;
     [SerializeField] TMP_Text OrderLine2;
 
+    [SerializeField] SpriteRenderer PourLiquid;
+    [SerializeField] SpriteRenderer CupLiquid;
+
     //Animator Referencees
     [SerializeField] public Animator CupAnimator;
     [SerializeField] public Animator PourAnimator;
@@ -45,6 +48,11 @@ public class Order : MonoBehaviour
     private void Awake()
     {
         Reset();
+    }
+
+    private int RandomInt()
+    {
+        return Random.Range(0, DrinkOrder.Length); //The maximum parameter is exclusive
     }
 
     public void Reset()
@@ -69,7 +77,7 @@ public class Order : MonoBehaviour
         FeedbackAnimator.SetBool("Neg", false);
 
         //New Order
-        CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
+        CustomerOrder(DrinkOrder[RandomInt()]);
     }
 
     void CustomerOrder(string CustOrder)
@@ -81,110 +89,89 @@ public class Order : MonoBehaviour
             case "Black Tea":
                 //  Mug + Tea bag + Water = Black Tea
                 RequiredIngredient = IngredientSelection[1];
-                RequiredLiquid = LiquidSelection[1];
+                RequiredLiquid = LiquidSelection[1]; //Water
 
-                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
-                {
-                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
-                }
-                
-                DisplayOrder("Black Tea", RequiredLiquid);
                 break;
 
             case "Milk Tea":
-                Rnd = Random.Range(0, 1);
+                Rnd = Random.Range(0, 2); //The maximum parameter is exclusive
 
                 RequiredIngredient = IngredientSelection[1];
 
                 if (Rnd == 0)
                 {
                     //  Mug + Tea bag + Cow Milk = Milk Tea
-                    RequiredLiquid = LiquidSelection[2];
+                    RequiredLiquid = LiquidSelection[2]; //Cow
                 }
                 else if (Rnd == 1)
                 {
                     //  Mug + Tea bag + Oat Milk = Milk Tea
-                    RequiredLiquid = LiquidSelection[3];
+                    RequiredLiquid = LiquidSelection[3]; //Oat
                 }
 
-                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
-                {
-                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
-                }
-
-                DisplayOrder("Milk Tea", RequiredLiquid);
                 break;
 
             case "Black Coffee":
                 //  Mug + Coffee + Water = Black Coffee
                 RequiredIngredient = IngredientSelection[2];
-                RequiredLiquid = LiquidSelection[1];
+                RequiredLiquid = LiquidSelection[1]; //Water
 
-                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
-                {
-                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
-                }
-
-                DisplayOrder("Black Coffee", RequiredLiquid);
                 break;
 
             case "White Coffee":
-                Rnd = Random.Range(0, 1);
+                Rnd = Random.Range(0, 2);
 
                 RequiredIngredient = IngredientSelection[2];
 
                 if (Rnd == 0)
                 {
                     //  Mug + Coffee + Cow Milk = White Coffee
-                    RequiredLiquid = LiquidSelection[2];
+                    RequiredLiquid = LiquidSelection[2]; //Cow
                 }
                 else if (Rnd == 1)
                 {
                     //  Mug + Coffee + Oat Milk = White Coffee
-                    RequiredLiquid = LiquidSelection[3];
+                    RequiredLiquid = LiquidSelection[3]; //Oat
                 }
 
-                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
-                {
-                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
-                }
-
-                DisplayOrder("White Coffee", RequiredLiquid);
                 break;
 
             case "Hot Chocolate":
-                Rnd = Random.Range(0, 2);
+                Rnd = Random.Range(0, 3);
 
                 RequiredIngredient = IngredientSelection[3];
 
                 if (Rnd == 0)
                 {
                     //  Mug + Chocolate + Water = Hot Chocolate
-                    RequiredLiquid = LiquidSelection[1];
+                    RequiredLiquid = LiquidSelection[1]; //Water
                 }
                 else if (Rnd == 1)
                 {
                     //  Mug + Chocolate + Cow Milk = Hot Chocolate
-                    RequiredLiquid = LiquidSelection[2];
+                    RequiredLiquid = LiquidSelection[2]; //Cow
                 }
                 else if (Rnd == 2)
                 {
                     //  Mug + Chocolate + Oat Milk = Hot Chocolate
-                    RequiredLiquid = LiquidSelection[3];
+                    RequiredLiquid = LiquidSelection[3]; //Oat
                 }
 
-                if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
-                {
-                    CustomerOrder(DrinkOrder[Random.Range(0, DrinkOrder.Length)]);
-                }
-
-                DisplayOrder("Hot Chocolate", RequiredLiquid);
                 break;
 
             default:
                 RequiredIngredient = "None";
                 RequiredLiquid = "None";
                 break;
+        }
+
+        if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
+        {
+            CustomerOrder(DrinkOrder[RandomInt()]);
+        }
+        else
+        {
+            DisplayOrder(CustOrder, RequiredLiquid);
         }
     }
 
@@ -227,16 +214,22 @@ public class Order : MonoBehaviour
                 case "04 0D 66 4C 9E 61 80":
                     //Tea Bag
                     SelectedIngredient = IngredientSelection[1];
+                    PourLiquid.color = new Color32(207, 163, 114, 255);
+                    CupLiquid.color = new Color32(207, 163, 114, 255);
                     break;
 
                 case "04 39 46 4C 9E 61 80":
                     //Coffee
                     SelectedIngredient = IngredientSelection[2];
+                    PourLiquid.color = new Color32(70, 41, 25, 255);
+                    CupLiquid.color = new Color32(70, 41, 25, 255);
                     break;
 
                 case "04 5A 45 4C 9E 61 80":
                     //Chocolate
                     SelectedIngredient = IngredientSelection[3];
+                    PourLiquid.color = new Color32(130, 80, 42, 255);
+                    CupLiquid.color = new Color32(130, 80, 42, 255);
                     break;
 
                 default:
