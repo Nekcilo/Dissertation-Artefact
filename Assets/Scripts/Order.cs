@@ -76,6 +76,10 @@ public class Order : MonoBehaviour
         FeedbackAnimator.SetBool("Pos", false);
         FeedbackAnimator.SetBool("Neg", false);
 
+        //Reset Display Text
+        DebugText2.text = IngredientSelection[0];
+        DebugText3.text = LiquidSelection[0];
+
         //New Order
         CustomerOrder(DrinkOrder[RandomInt()]);
     }
