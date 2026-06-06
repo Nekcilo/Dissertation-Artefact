@@ -1408,8 +1408,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1152397164}
   - component: {fileID: 1152397165}
-  - component: {fileID: 1152397167}
-  - component: {fileID: 1152397166}
   m_Layer: 5
   m_Name: OrderText
   m_TagString: Untagged
@@ -1450,6 +1448,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b524c87e911594f921e7c7253158c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DrinkOrder:
+  - {fileID: 11400000, guid: 93f0a900085df2745896dc13713845b7, type: 2}
+  - {fileID: 11400000, guid: 39ddbf3b815aec64882ea8d630ff50da, type: 2}
+  - {fileID: 11400000, guid: d6943e20c1d5f85428a921bd732720aa, type: 2}
+  - {fileID: 11400000, guid: 077bdd034c64cb342b1ee047a7ac9f54, type: 2}
+  - {fileID: 11400000, guid: 1014f19c327d54c449d664e65e5b7032, type: 2}
+  - {fileID: 11400000, guid: c2de72210b261064bb16fc01e4661027, type: 2}
+  - {fileID: 11400000, guid: fb4607b9170e8fd49b846bb81639004b, type: 2}
+  - {fileID: 11400000, guid: 3fba8382a9adc0649a266a25f42f21fe, type: 2}
+  - {fileID: 11400000, guid: bd5b47db800ffa649ab010632e83bc8f, type: 2}
+  - {fileID: 11400000, guid: fc00df9850b20a34aa456b3b556c8146, type: 2}
+  - {fileID: 11400000, guid: dfcd86b7d41b5b942b435b8f875b3406, type: 2}
+  - {fileID: 11400000, guid: 0752050d6331a544ca7bbd629c734d97, type: 2}
+  - {fileID: 11400000, guid: f648e590b9b3bbc4a82cb732a7245e65, type: 2}
+  - {fileID: 11400000, guid: a1d4e712c17f2254f8fe50f4cb794dbd, type: 2}
+  - {fileID: 11400000, guid: a9c4c1eca967d284a91ed4888fab3416, type: 2}
+  - {fileID: 11400000, guid: 1b64e3349e70568428534bda0beea050, type: 2}
+  - {fileID: 11400000, guid: b40a0e327e81aed47af5dfeba3b888f3, type: 2}
+  - {fileID: 11400000, guid: 568a49a3755640f4ba372eebc3b7ebd2, type: 2}
+  RequiredVessel: 
   RequiredIngredient: 
   RequiredLiquid: 
   DebugText2: {fileID: 691480085}
@@ -1463,43 +1481,11 @@ MonoBehaviour:
   PourAnimator: {fileID: 107217091}
   FeedbackAnimator: {fileID: 924646028}
   RotValue: 0
-  SelectedLiquid: 
   drinkFull: 0
   VesselPresent: 0
---- !u!114 &1152397166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1152397163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd774138faef89840a4e66fb9c73f934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ButtonPressed: 0
-  ButtonIdentifier: 0
-  RawRotation: 0
-  NFCID: 0
-  OrderScript: {fileID: 1152397165}
---- !u!114 &1152397167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1152397163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portName: COM3
-  baudRate: 9600
-  messageListener: {fileID: 1152397163}
-  reconnectionDelay: 200
-  maxUnreadMessages: 1
+  IngredientPresent: 0
+  PreviousVesselTime: 0
+  PreviousIngredientTime: 0
 --- !u!1 &1190737222
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,6 +2316,73 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1713078923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1713078926}
+  - component: {fileID: 1713078925}
+  - component: {fileID: 1713078924}
+  m_Layer: 0
+  m_Name: MainManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1713078924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd774138faef89840a4e66fb9c73f934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonPressed: 0
+  ButtonIdentifier: 0
+  RawRotation: 0
+  NFCID: 0
+  OrderScript: {fileID: 1152397165}
+--- !u!114 &1713078925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portName: COM3
+  baudRate: 9600
+  messageListener: {fileID: 1152397163}
+  reconnectionDelay: 200
+  maxUnreadMessages: 1
+--- !u!4 &1713078926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5682419, y: -0.36992776, z: -2.0984962}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1923004070
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,3 +2747,4 @@ SceneRoots:
   - {fileID: 208483463}
   - {fileID: 1923004072}
   - {fileID: 1271416740}
+  - {fileID: 1713078926}

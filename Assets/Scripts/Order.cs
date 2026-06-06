@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Order : MonoBehaviour
 {
-    //Order Arrays
-    string[] DrinkOrder = {"Black Tea", "Milk Tea", "Black Coffee", "White Coffee", "Hot Chocolate"};
+
+    public List<DrinkDefiniton> DrinkOrder = new List<DrinkDefiniton>();
+    private DrinkDefiniton Definition;
 
     //Selection Arrays
     string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
     string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
 
     //Required Values
+    [SerializeField] string RequiredVessel;
     [SerializeField] string RequiredIngredient;
     [SerializeField] string RequiredLiquid;
 
@@ -37,19 +38,20 @@ public class Order : MonoBehaviour
 
     //Public Variables
     [SerializeField] public int RotValue;
-    [SerializeField] public string SelectedLiquid;
     public bool drinkFull;
     public bool VesselPresent = false;
     public bool IngredientPresent = false;
 
     //Private Variables
-    string SelectedIngredient;
+    string SelectedVessel, SelectedIngredient, SelectedLiquid;
     bool LiquidPoured;
-    string PreviousIngredient;
-    string PreviousLiquid;
+    
+    string PreviousVessel, PreviousIngredient, PreviousLiquid;
+
     float TimeoutTime = 0.5f;
     public float PreviousVesselTime;
     public float PreviousIngredientTime;
+    
     int VesselReader;
 
 
@@ -76,7 +78,7 @@ public class Order : MonoBehaviour
 
     private int RandomInt()
     {
-        return Random.Range(0, DrinkOrder.Length); //The maximum parameter is exclusive
+        return Random.Range(0, DrinkOrder.Count); //The maximum parameter is exclusive
     }
 
     public void Reset()
@@ -108,101 +110,24 @@ public class Order : MonoBehaviour
         DebugText3.text = LiquidSelection[0];
 
         //New Order
-        CustomerOrder(DrinkOrder[RandomInt()]);
+        CustomerOrder(RandomInt());
     }
 
-    void CustomerOrder(string CustOrder)
+    void CustomerOrder(int CustOrder)
     {
-        int Rnd;
+        Definition = DrinkOrder[CustOrder];
 
-        switch (CustOrder)
-        {    
-            case "Black Tea":
-                //  Mug + Tea bag + Water = Black Tea
-                RequiredIngredient = IngredientSelection[1];
-                RequiredLiquid = LiquidSelection[1]; //Water
+        RequiredVessel = Definition.RequiredVessel;
+        RequiredIngredient = Definition.RequiredIngredient;
+        RequiredLiquid = Definition.RequiredLiquid;
 
-                break;
-
-            case "Milk Tea":
-                Rnd = Random.Range(0, 2); //The maximum parameter is exclusive
-
-                RequiredIngredient = IngredientSelection[1];
-
-                if (Rnd == 0)
-                {
-                    //  Mug + Tea bag + Cow Milk = Milk Tea
-                    RequiredLiquid = LiquidSelection[2]; //Cow
-                }
-                else if (Rnd == 1)
-                {
-                    //  Mug + Tea bag + Oat Milk = Milk Tea
-                    RequiredLiquid = LiquidSelection[3]; //Oat
-                }
-
-                break;
-
-            case "Black Coffee":
-                //  Mug + Coffee + Water = Black Coffee
-                RequiredIngredient = IngredientSelection[2];
-                RequiredLiquid = LiquidSelection[1]; //Water
-
-                break;
-
-            case "White Coffee":
-                Rnd = Random.Range(0, 2);
-
-                RequiredIngredient = IngredientSelection[2];
-
-                if (Rnd == 0)
-                {
-                    //  Mug + Coffee + Cow Milk = White Coffee
-                    RequiredLiquid = LiquidSelection[2]; //Cow
-                }
-                else if (Rnd == 1)
-                {
-                    //  Mug + Coffee + Oat Milk = White Coffee
-                    RequiredLiquid = LiquidSelection[3]; //Oat
-                }
-
-                break;
-
-            case "Hot Chocolate":
-                Rnd = Random.Range(0, 3);
-
-                RequiredIngredient = IngredientSelection[3];
-
-                if (Rnd == 0)
-                {
-                    //  Mug + Chocolate + Water = Hot Chocolate
-                    RequiredLiquid = LiquidSelection[1]; //Water
-                }
-                else if (Rnd == 1)
-                {
-                    //  Mug + Chocolate + Cow Milk = Hot Chocolate
-                    RequiredLiquid = LiquidSelection[2]; //Cow
-                }
-                else if (Rnd == 2)
-                {
-                    //  Mug + Chocolate + Oat Milk = Hot Chocolate
-                    RequiredLiquid = LiquidSelection[3]; //Oat
-                }
-
-                break;
-
-            default:
-                RequiredIngredient = "None";
-                RequiredLiquid = "None";
-                break;
-        }
-
-        if (PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
+        if (PreviousVessel == RequiredVessel || PreviousIngredient == RequiredIngredient || PreviousLiquid == RequiredLiquid)
         {
-            CustomerOrder(DrinkOrder[RandomInt()]);
+            CustomerOrder(RandomInt());
         }
         else
         {
-            DisplayOrder(CustOrder, RequiredLiquid);
+            DisplayOrder(Definition.DrinkName, RequiredLiquid);
         }
     }
 
@@ -252,6 +177,7 @@ public class Order : MonoBehaviour
                     Debug.Log("Vessel Present");
                     VesselPresent = true;
                     VesselReader = Reader;
+                    SelectedVessel = "Cup";
                     PreviousVesselTime = Time.time;
                     break;
 
@@ -260,6 +186,7 @@ public class Order : MonoBehaviour
                     Debug.Log("Vessel Present");
                     VesselPresent = true;
                     VesselReader = Reader;
+                    SelectedVessel = "Mug";
                     PreviousVesselTime = Time.time;
                     break;
 
@@ -337,8 +264,9 @@ public class Order : MonoBehaviour
     void DrinkCheck()
     {
 
-        if (SelectedIngredient == RequiredIngredient && SelectedLiquid == RequiredLiquid)
-        { 
+        if (SelectedVessel == RequiredVessel && SelectedIngredient == RequiredIngredient && SelectedLiquid == RequiredLiquid)
+        {
+            Debug.Log("Correct Vessel");
             Debug.Log("Correct Liquid");
             Debug.Log("Correct Ingredient");
 
@@ -349,6 +277,7 @@ public class Order : MonoBehaviour
             FeedbackAnimator.SetBool("Neg", true);
         }
 
+        PreviousVessel = RequiredVessel;
         PreviousIngredient = RequiredIngredient;
         PreviousLiquid = RequiredLiquid;
     }
