@@ -39,14 +39,14 @@ public class Order : MonoBehaviour
     [SerializeField] public int RotValue;
     [SerializeField] public string SelectedLiquid;
     public bool drinkFull;
+    public bool VesselPresent;
 
     //Private Variables
     string SelectedIngredient;
     bool LiquidPoured;
     string PreviousIngredient;
     string PreviousLiquid;
-    bool VesselPresent;
-
+    
     private void Awake()
     {
         Reset();
@@ -211,9 +211,11 @@ public class Order : MonoBehaviour
         }
     }
 
-    public void NFC(string NFCID)
+    public void NFC(string NFCID, int Reader)
     {
-        if (!LiquidPoured && !VesselPresent)
+        Debug.Log("NFC Read");
+
+        if (!LiquidPoured && !VesselPresent && Reader == 1)
         {
             switch (NFCID)
 
@@ -227,7 +229,7 @@ public class Order : MonoBehaviour
             }        
         }
 
-        if (!LiquidPoured && VesselPresent)
+        if (!LiquidPoured && VesselPresent && Reader == 2)
         {        
             switch (NFCID)
             {
