@@ -56,10 +56,10 @@ public class MyMessageListener : MonoBehaviour
             RawRotation = int.Parse(msg.Substring(9, length));
             OrderScript.Rotation(RawRotation);
         }
-        else if (msg.Substring(0, 14) == "RFID Tag UID: ")
+        else if (msg.Substring(10, 21) == "Card UID: ")
         {
-            int length = msg.Length - 14;
-            NFCID = msg.Substring(14, length);
+            int length = msg.Length - 21;
+            NFCID = msg.Substring(21, length);
             OrderScript.NFC(NFCID);
         }
     }

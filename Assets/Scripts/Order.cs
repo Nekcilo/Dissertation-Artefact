@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,6 +45,7 @@ public class Order : MonoBehaviour
     bool LiquidPoured;
     string PreviousIngredient;
     string PreviousLiquid;
+    bool VesselPresent;
 
     private void Awake()
     {
@@ -69,6 +71,8 @@ public class Order : MonoBehaviour
         RotValue = 0;
         drinkFull = false;
         LiquidPoured = false;
+
+        VesselPresent = false;
 
         //Reset Fill Animation
         CupAnimator.SetBool("AnimIsPouring", false);
@@ -209,8 +213,21 @@ public class Order : MonoBehaviour
 
     public void NFC(string NFCID)
     {
+        if (!LiquidPoured && !VesselPresent)
+        {
+            switch (NFCID)
 
-        if (!LiquidPoured)
+            {
+                case "04 34 AE 4C 9E 61 80":
+                    VesselPresent = true;
+                    break;
+
+                default:
+                    break;
+            }        
+        }
+
+        if (!LiquidPoured && VesselPresent)
         {        
             switch (NFCID)
             {
@@ -255,7 +272,7 @@ public class Order : MonoBehaviour
             DebugText4.text = (RotValue.ToString());
 
             //5 = pour threshold;
-            if (RotValue > 5 && !drinkFull)
+            if (RotValue < 205 && !drinkFull)
             {
                 LiquidPoured = true;
                 PourAnimator.SetBool("AnimIsPouring", true);
