@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class AnimTrigger : MonoBehaviour
 {
-    [SerializeField] Order orderScript;
+    [SerializeField] Order OrderScript;
+    [SerializeField] Hardware HardwareScript;
 
     public void EntryPourAnim()
     {
-        orderScript.CupAnimator.SetBool("AnimIsPouring", true);
+        OrderScript.CupAnimator.SetBool("AnimIsPouring", true);
     }
 
     public void DrinkFull()
     {
-        orderScript.drinkFull = true;
-        orderScript.PourAnimator.SetBool("AnimIsPouring", false);
+        HardwareScript.drinkFull = true;
+        OrderScript.PourAnimator.SetBool("AnimIsPouring", false);
     }
     public void ExitPourAnim()
     {
-        orderScript.Reset();
+        HardwareScript.Reset();
     }
 }

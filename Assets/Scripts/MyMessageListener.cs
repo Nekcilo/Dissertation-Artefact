@@ -11,6 +11,7 @@ public class MyMessageListener : MonoBehaviour
     [SerializeField] public string NFCID;
 
     //Script References
+    [SerializeField] Hardware HardwareScript;
     [SerializeField] Order OrderScript;
 
     // Invoked when a line of data is received from the serial device.
@@ -21,25 +22,20 @@ public class MyMessageListener : MonoBehaviour
             case "Button 1 Pushed":
                 ButtonPressed = true;
                 ButtonIdentifier = 1;
-                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
+                HardwareScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
 
             case "Button 2 Pushed":
                 ButtonPressed = true;
                 ButtonIdentifier = 2;
-                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
+                HardwareScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
 
             case "Button 3 Pushed":
                 ButtonPressed = true;
                 ButtonIdentifier = 3;
-                OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
+                HardwareScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
                 break;
-
-            //case "All 3 Button Unpushed":
-            //    ButtonPressed = false;
-            //    OrderScript.ButtonCheck(ButtonPressed, ButtonIdentifier);
-            //    break;
 
             default:
                 Detector(msg);
@@ -54,19 +50,19 @@ public class MyMessageListener : MonoBehaviour
         {
             int length = msg.Length - 9;
             RawRotation = int.Parse(msg.Substring(9, length));
-            OrderScript.Rotation(RawRotation);
+            HardwareScript.Rotation(RawRotation);
         }
         else if (msg.Substring(0, 20) == "Reader 1: Card UID: ")
         {
             int length = msg.Length - 20;
             NFCID = msg.Substring(20, length);
-            OrderScript.NFC(NFCID, 1);
+            HardwareScript.NFC(NFCID, 1);
         }
         else if (msg.Substring(0, 20) == "Reader 2: Card UID: ")
         {
             int length = msg.Length - 20;
             NFCID = msg.Substring(20, length);
-            OrderScript.NFC(NFCID, 2);
+            HardwareScript.NFC(NFCID, 2);
         }
     }
 

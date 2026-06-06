@@ -421,7 +421,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0228c6b535390164cbbfce6ec260f395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orderScript: {fileID: 1152397165}
+  OrderScript: {fileID: 1713078928}
+  HardwareScript: {fileID: 1713078927}
 --- !u!1 &208483462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,7 +1408,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1152397164}
-  - component: {fileID: 1152397165}
   m_Layer: 5
   m_Name: OrderText
   m_TagString: Untagged
@@ -1436,56 +1436,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -10}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1152397165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1152397163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16b524c87e911594f921e7c7253158c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DrinkOrder:
-  - {fileID: 11400000, guid: 93f0a900085df2745896dc13713845b7, type: 2}
-  - {fileID: 11400000, guid: 39ddbf3b815aec64882ea8d630ff50da, type: 2}
-  - {fileID: 11400000, guid: d6943e20c1d5f85428a921bd732720aa, type: 2}
-  - {fileID: 11400000, guid: 077bdd034c64cb342b1ee047a7ac9f54, type: 2}
-  - {fileID: 11400000, guid: 1014f19c327d54c449d664e65e5b7032, type: 2}
-  - {fileID: 11400000, guid: c2de72210b261064bb16fc01e4661027, type: 2}
-  - {fileID: 11400000, guid: fb4607b9170e8fd49b846bb81639004b, type: 2}
-  - {fileID: 11400000, guid: 3fba8382a9adc0649a266a25f42f21fe, type: 2}
-  - {fileID: 11400000, guid: bd5b47db800ffa649ab010632e83bc8f, type: 2}
-  - {fileID: 11400000, guid: fc00df9850b20a34aa456b3b556c8146, type: 2}
-  - {fileID: 11400000, guid: dfcd86b7d41b5b942b435b8f875b3406, type: 2}
-  - {fileID: 11400000, guid: 0752050d6331a544ca7bbd629c734d97, type: 2}
-  - {fileID: 11400000, guid: f648e590b9b3bbc4a82cb732a7245e65, type: 2}
-  - {fileID: 11400000, guid: a1d4e712c17f2254f8fe50f4cb794dbd, type: 2}
-  - {fileID: 11400000, guid: a9c4c1eca967d284a91ed4888fab3416, type: 2}
-  - {fileID: 11400000, guid: 1b64e3349e70568428534bda0beea050, type: 2}
-  - {fileID: 11400000, guid: b40a0e327e81aed47af5dfeba3b888f3, type: 2}
-  - {fileID: 11400000, guid: 568a49a3755640f4ba372eebc3b7ebd2, type: 2}
-  RequiredVessel: 
-  RequiredIngredient: 
-  RequiredLiquid: 
-  DebugText2: {fileID: 691480085}
-  DebugText3: {fileID: 95622197}
-  DebugText4: {fileID: 1095021977}
-  OrderLine1: {fileID: 254483880}
-  OrderLine2: {fileID: 2049262093}
-  PourLiquid: {fileID: 107217089}
-  CupLiquid: {fileID: 2114711020}
-  CupAnimator: {fileID: 2114711021}
-  PourAnimator: {fileID: 107217091}
-  FeedbackAnimator: {fileID: 924646028}
-  RotValue: 0
-  drinkFull: 0
-  VesselPresent: 0
-  IngredientPresent: 0
-  PreviousVesselTime: 0
-  PreviousIngredientTime: 0
 --- !u!1 &1190737222
 GameObject:
   m_ObjectHideFlags: 0
@@ -2325,6 +2275,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1713078926}
+  - component: {fileID: 1713078928}
+  - component: {fileID: 1713078927}
   - component: {fileID: 1713078925}
   - component: {fileID: 1713078924}
   m_Layer: 0
@@ -2350,7 +2302,8 @@ MonoBehaviour:
   ButtonIdentifier: 0
   RawRotation: 0
   NFCID: 0
-  OrderScript: {fileID: 1152397165}
+  HardwareScript: {fileID: 1713078927}
+  OrderScript: {fileID: 1713078928}
 --- !u!114 &1713078925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2365,7 +2318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portName: COM3
   baudRate: 9600
-  messageListener: {fileID: 1152397163}
+  messageListener: {fileID: 1713078923}
   reconnectionDelay: 200
   maxUnreadMessages: 1
 --- !u!4 &1713078926
@@ -2383,6 +2336,85 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1713078927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f155677ea2db31244ad7c88195cda8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrderScript: {fileID: 1713078928}
+  RotValue: 0
+  drinkFull: 0
+  VesselPresent: 0
+  IngredientPresent: 0
+  RequiredVessel: 
+  RequiredIngredient: 
+  RequiredLiquid: 
+  SelectedVessel: 
+  SelectedIngredient: 
+  SelectedLiquid: 
+  PreviousVessel: 
+  PreviousIngredient: 
+  PreviousLiquid: 
+  PreviousVesselTime: 0
+  PreviousIngredientTime: 0
+--- !u!114 &1713078928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b524c87e911594f921e7c7253158c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DrinkOrder:
+  - {fileID: 11400000, guid: 93f0a900085df2745896dc13713845b7, type: 2}
+  - {fileID: 11400000, guid: 39ddbf3b815aec64882ea8d630ff50da, type: 2}
+  - {fileID: 11400000, guid: d6943e20c1d5f85428a921bd732720aa, type: 2}
+  - {fileID: 11400000, guid: 077bdd034c64cb342b1ee047a7ac9f54, type: 2}
+  - {fileID: 11400000, guid: 1014f19c327d54c449d664e65e5b7032, type: 2}
+  - {fileID: 11400000, guid: c2de72210b261064bb16fc01e4661027, type: 2}
+  - {fileID: 11400000, guid: fb4607b9170e8fd49b846bb81639004b, type: 2}
+  - {fileID: 11400000, guid: 3fba8382a9adc0649a266a25f42f21fe, type: 2}
+  - {fileID: 11400000, guid: bd5b47db800ffa649ab010632e83bc8f, type: 2}
+  - {fileID: 11400000, guid: fc00df9850b20a34aa456b3b556c8146, type: 2}
+  - {fileID: 11400000, guid: dfcd86b7d41b5b942b435b8f875b3406, type: 2}
+  - {fileID: 11400000, guid: 0752050d6331a544ca7bbd629c734d97, type: 2}
+  - {fileID: 11400000, guid: f648e590b9b3bbc4a82cb732a7245e65, type: 2}
+  - {fileID: 11400000, guid: a1d4e712c17f2254f8fe50f4cb794dbd, type: 2}
+  - {fileID: 11400000, guid: a9c4c1eca967d284a91ed4888fab3416, type: 2}
+  - {fileID: 11400000, guid: 1b64e3349e70568428534bda0beea050, type: 2}
+  - {fileID: 11400000, guid: b40a0e327e81aed47af5dfeba3b888f3, type: 2}
+  - {fileID: 11400000, guid: 568a49a3755640f4ba372eebc3b7ebd2, type: 2}
+  IngredientSelection:
+  - None
+  - Tea
+  - Coffee
+  - Chocolate
+  LiquidSelection:
+  - None
+  - Water
+  - Cow
+  - Oat
+  DebugText2: {fileID: 691480085}
+  DebugText3: {fileID: 95622197}
+  OrderLine1: {fileID: 254483880}
+  OrderLine2: {fileID: 2049262093}
+  PourLiquid: {fileID: 107217089}
+  CupLiquid: {fileID: 2114711020}
+  CupAnimator: {fileID: 2114711021}
+  PourAnimator: {fileID: 107217091}
+  FeedbackAnimator: {fileID: 924646028}
+  HardwareScript: {fileID: 1713078927}
 --- !u!1 &1923004070
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,7 +2767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0228c6b535390164cbbfce6ec260f395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orderScript: {fileID: 1152397165}
+  OrderScript: {fileID: 1713078928}
+  HardwareScript: {fileID: 1713078927}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
