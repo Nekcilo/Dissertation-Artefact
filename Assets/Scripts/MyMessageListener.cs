@@ -56,16 +56,16 @@ public class MyMessageListener : MonoBehaviour
             RawRotation = int.Parse(msg.Substring(9, length));
             OrderScript.Rotation(RawRotation);
         }
-        else if (msg.Substring(0, 19) == "Reader 1: Card UID: ")
+        else if (msg.Substring(0, 20) == "Reader 1: Card UID: ")
         {
-            int length = msg.Length - 19;
-            NFCID = msg.Substring(19, length);
+            int length = msg.Length - 20;
+            NFCID = msg.Substring(20, length);
             OrderScript.NFC(NFCID, 1);
         }
-        else if (msg.Substring(0, 19) == "Reader 2: Card UID: ")
+        else if (msg.Substring(0, 20) == "Reader 2: Card UID: ")
         {
-            int length = msg.Length - 19;
-            NFCID = msg.Substring(19, length);
+            int length = msg.Length - 20;
+            NFCID = msg.Substring(20, length);
             OrderScript.NFC(NFCID, 2);
         }
     }

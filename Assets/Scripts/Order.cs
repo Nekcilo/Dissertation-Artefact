@@ -39,17 +39,39 @@ public class Order : MonoBehaviour
     [SerializeField] public int RotValue;
     [SerializeField] public string SelectedLiquid;
     public bool drinkFull;
-    public bool VesselPresent;
+    public bool VesselPresent = false;
+    public bool IngredientPresent = false;
 
     //Private Variables
     string SelectedIngredient;
     bool LiquidPoured;
     string PreviousIngredient;
     string PreviousLiquid;
-    
+    float TimeoutTime = 0.5f;
+    public float PreviousVesselTime;
+    public float PreviousIngredientTime;
+    int VesselReader;
+
+
     private void Awake()
     {
         Reset();
+    }
+
+    private void Update()
+    {
+        if (VesselPresent && (Time.time - PreviousVesselTime > TimeoutTime))
+        {
+            VesselPresent = false;
+            VesselReader = 0;
+            Debug.Log("Vessel Removed");
+        }
+        if (IngredientPresent && (Time.time - PreviousIngredientTime > TimeoutTime))
+        {
+            IngredientPresent = false;
+            Debug.Log("Ingredient Removed");
+            DebugText2.text = IngredientSelection[0];
+        }
     }
 
     private int RandomInt()
@@ -73,6 +95,7 @@ public class Order : MonoBehaviour
         LiquidPoured = false;
 
         VesselPresent = false;
+        IngredientPresent = false;
 
         //Reset Fill Animation
         CupAnimator.SetBool("AnimIsPouring", false);
@@ -213,15 +236,31 @@ public class Order : MonoBehaviour
 
     public void NFC(string NFCID, int Reader)
     {
-        Debug.Log("NFC Read");
+        if (NFCID == "04 34 AE 4C 9E 61 80" || NFCID == "04 5A 7D 40 9E 61 80")
+        {
+            PreviousVesselTime = Time.time;
+        }
+        
 
-        if (!LiquidPoured && !VesselPresent && Reader == 1)
+        if (!LiquidPoured && !VesselPresent)
         {
             switch (NFCID)
 
             {
                 case "04 34 AE 4C 9E 61 80":
+                    //Cup
+                    Debug.Log("Vessel Present");
                     VesselPresent = true;
+                    VesselReader = Reader;
+                    PreviousVesselTime = Time.time;
+                    break;
+
+                case "04 5A 7D 40 9E 61 80":
+                    //Mug
+                    Debug.Log("Vessel Present");
+                    VesselPresent = true;
+                    VesselReader = Reader;
+                    PreviousVesselTime = Time.time;
                     break;
 
                 default:
@@ -229,30 +268,39 @@ public class Order : MonoBehaviour
             }        
         }
 
-        if (!LiquidPoured && VesselPresent && Reader == 2)
+        if (!LiquidPoured && VesselPresent && Reader != VesselReader)
         {        
             switch (NFCID)
             {
 
                 case "04 0D 66 4C 9E 61 80":
                     //Tea Bag
+                    Debug.Log("Ingredient Present");
+                    IngredientPresent = true;
                     SelectedIngredient = IngredientSelection[1];
                     PourLiquid.color = new Color32(207, 163, 114, 255);
                     CupLiquid.color = new Color32(207, 163, 114, 255);
+                    PreviousIngredientTime = Time.time;
                     break;
 
                 case "04 39 46 4C 9E 61 80":
                     //Coffee
+                    Debug.Log("Ingredient Present");
+                    IngredientPresent = true;
                     SelectedIngredient = IngredientSelection[2];
                     PourLiquid.color = new Color32(70, 41, 25, 255);
                     CupLiquid.color = new Color32(70, 41, 25, 255);
+                    PreviousIngredientTime = Time.time;
                     break;
 
                 case "04 5A 45 4C 9E 61 80":
                     //Chocolate
+                    Debug.Log("Ingredient Present");
+                    IngredientPresent = true;
                     SelectedIngredient = IngredientSelection[3];
                     PourLiquid.color = new Color32(130, 80, 42, 255);
                     CupLiquid.color = new Color32(130, 80, 42, 255);
+                    PreviousIngredientTime = Time.time;
                     break;
 
                 default:
