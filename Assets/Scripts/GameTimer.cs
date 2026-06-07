@@ -5,20 +5,34 @@ using UnityEngine;
 
 public class GameTimer : MonoBehaviour
 {
+    [Header("Game Booleans")]
     public bool GameActive;
     public bool HasCalculated;
+    public bool Replay = false;
+    public bool CooldownEnded;
 
-    float TimerLength = 60f;
+    //Timer Values
+    [Header("Elapsed Time")]
     public float ElapsedTime = 0f;
+    float TimerLength = 60f;
 
+    public float CooldownTime = 0f;
+    float CooldownLength = 5f;
+
+    //Script References
+    [Header("Script References")]
     [SerializeField] Score ScoreScript;
+    [SerializeField] ScoreUI ScoreUIScript;
     [SerializeField] Hardware HardwareScript;
 
     private void Awake()
     {
+        ScoreUIScript.HideUI();
+
         GameActive = true;
 
         HardwareScript.ResetRound();
+        HardwareScript.ResetAnim();
     }
 
     private void Update()
@@ -39,25 +53,48 @@ public class GameTimer : MonoBehaviour
         if (GameActive)
         {
             ElapsedTime += Time.deltaTime;
+            Replay = false;
         }
     }
 
     public void ResetGame()
     {
-        if (!GameActive && !HasCalculated)
+        if (!GameActive)
         {
-            Debug.Log("Game Finished");
+            CooldownTime += Time.deltaTime;
 
-            HardwareScript.ResetRound();
+            if (!HasCalculated)
+            {
+                Debug.Log("Game Finished");
 
-            HasCalculated = ScoreScript.TotalScoreCalculator();
+                //HardwareScript.ResetRound();
+
+                HasCalculated = ScoreScript.TotalScoreCalculator();
+
+                ScoreUIScript.ShowUI();
+            } 
+
+            if (CooldownTimer() && Replay)
+            {
+                ScoreUIScript.HideUI();
+
+                ScoreScript.ResetScore();
+                GameActive = true;
+                ElapsedTime = 0;
+
+                HardwareScript.ResetRound();
+            }
+        }
+    }
+
+    bool CooldownTimer()
+    {
+        if (CooldownTime >= CooldownLength)
+        {
+            //Debug.Log("Cooldown Ended");
+            return true;
         }
 
-        //if (//Button Clicked//)
-        //{
-        //    ScoreScript.ResetScore();
-        //    GameActive = true;
-              //ElapsedTime = 0;
-        //}
+        return false;
     }
 }

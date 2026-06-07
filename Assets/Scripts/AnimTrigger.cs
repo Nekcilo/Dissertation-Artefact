@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AnimTrigger : MonoBehaviour
 {
+    //Script References
+    [Header("Script References")]
     [SerializeField] Order OrderScript;
     [SerializeField] Hardware HardwareScript;
 
@@ -19,6 +21,6 @@ public class AnimTrigger : MonoBehaviour
     }
     public void ExitPourAnim()
     {
-        HardwareScript.ResetRound();
+        HardwareScript.ResetAnim();
     }
 }

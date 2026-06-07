@@ -5,12 +5,13 @@ using UnityEngine;
 public class MyMessageListener : MonoBehaviour
 {
     //Public Variables
-    [SerializeField] public bool ButtonPressed;
-    [SerializeField] public int ButtonIdentifier;
-    [SerializeField] public int RawRotation;
-    [SerializeField] public string NFCID;
+    [HideInInspector] public bool ButtonPressed;
+    [HideInInspector] public int ButtonIdentifier;
+    [HideInInspector] public int RawRotation;
+    [HideInInspector] public string NFCID;
 
     //Script References
+    [Header("Script References")]
     [SerializeField] Hardware HardwareScript;
     [SerializeField] Order OrderScript;
 
