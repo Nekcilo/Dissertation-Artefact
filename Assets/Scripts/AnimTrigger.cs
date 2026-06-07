@@ -19,6 +19,6 @@ public class AnimTrigger : MonoBehaviour
     }
     public void ExitPourAnim()
     {
-        HardwareScript.Reset();
+        HardwareScript.ResetRound();
     }
 }

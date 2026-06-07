@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class Order : MonoBehaviour
 {
-
     public List<DrinkDefiniton> DrinkOrder = new List<DrinkDefiniton>();
     private DrinkDefiniton Definition;
 
     //Selection Arrays
-    public string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
-    public string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
+    [HideInInspector] public string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
+    [HideInInspector] public string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
 
     //DebugText
     public TMP_Text DebugText2, DebugText3; //Ingredient //Liquid
@@ -31,6 +30,10 @@ public class Order : MonoBehaviour
 
     //Script References
     [SerializeField] Hardware HardwareScript;
+    [SerializeField] Score ScoreScript;
+    [SerializeField] GameTimer TimerScript;
+
+    public bool RoundStarted;
 
     public int RandomInt()
     {
@@ -39,19 +42,33 @@ public class Order : MonoBehaviour
 
     public void CustomerOrder(int CustOrder)
     {
-        Definition = DrinkOrder[CustOrder];
-
-        HardwareScript.RequiredVessel = Definition.RequiredVessel;
-        HardwareScript.RequiredIngredient = Definition.RequiredIngredient;
-        HardwareScript.RequiredLiquid = Definition.RequiredLiquid;
-
-        if (HardwareScript.PreviousVessel == HardwareScript.RequiredVessel || HardwareScript.PreviousIngredient == HardwareScript.RequiredIngredient || HardwareScript.PreviousLiquid == HardwareScript.RequiredLiquid)
+        if (!TimerScript.GameActive)
         {
-            CustomerOrder(RandomInt());
+            RoundStarted = false;
         }
-        else
+        else if (TimerScript.GameActive)
         {
-            DisplayOrder(Definition.DrinkName, HardwareScript.RequiredLiquid);
+            RoundStarted = true;
+        }
+
+        if (RoundStarted)
+        {
+            Debug.Log("Round Started");
+
+            Definition = DrinkOrder[CustOrder];
+
+            HardwareScript.RequiredVessel = Definition.RequiredVessel;
+            HardwareScript.RequiredIngredient = Definition.RequiredIngredient;
+            HardwareScript.RequiredLiquid = Definition.RequiredLiquid;
+
+            if (HardwareScript.PreviousVessel == HardwareScript.RequiredVessel || HardwareScript.PreviousIngredient == HardwareScript.RequiredIngredient || HardwareScript.PreviousLiquid == HardwareScript.RequiredLiquid)
+            {
+                CustomerOrder(RandomInt());
+            }
+            else
+            {
+                DisplayOrder(Definition.DrinkName, HardwareScript.RequiredLiquid);
+            }
         }
     }
 
@@ -84,15 +101,34 @@ public class Order : MonoBehaviour
             Debug.Log("Correct Ingredient");
 
             FeedbackAnimator.SetBool("Pos", true);
+            
+            if (ScoreScript.FastPreparation())
+            {
+                ScoreScript.BonusOrders += 1;
+                Debug.Log("BONUS! Score +3.2");
+            }
+            else if (!ScoreScript.FastPreparation())
+            {
+                Debug.Log("Score +1.6");
+            }
+
+            ScoreScript.GoodOrders += 1;
         }
         else
         {
             FeedbackAnimator.SetBool("Neg", true);
+            
+            ScoreScript.BadOrders += 1;
+
+            Debug.Log("Score -1.4");
         }
 
         HardwareScript.PreviousVessel = HardwareScript.RequiredVessel;
         HardwareScript.PreviousIngredient = HardwareScript.RequiredIngredient;
         HardwareScript.PreviousLiquid = HardwareScript.RequiredLiquid;
+
+        Debug.Log("Time Taken: " + ScoreScript.PreviousTime);
+        HardwareScript.ResetRound();
     }
 
 }

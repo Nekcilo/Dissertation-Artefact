@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Hardware : MonoBehaviour
 {
-    //Script References
-    [SerializeField] Order OrderScript;
-
     //Public Variables
     [SerializeField] public int RotValue;
     public bool drinkFull;
@@ -15,36 +12,35 @@ public class Hardware : MonoBehaviour
     public string RequiredVessel, RequiredIngredient, RequiredLiquid;
     public string SelectedVessel, SelectedIngredient, SelectedLiquid;
     public string PreviousVessel, PreviousIngredient, PreviousLiquid;
-    public float PreviousVesselTime;
-    public float PreviousIngredientTime;
 
     //Private Variables
     bool LiquidPoured;
+    float PreviousVesselTime;
+    float PreviousIngredientTime;
     float TimeoutTime = 0.5f;
     int VesselReader;
 
-    private void Awake()
-    {
-        Reset();
-    }
+    //Script References
+    [SerializeField] Order OrderScript;
+    [SerializeField] Score ScoreScript;
+    [SerializeField] GameTimer TimerScript;
 
     private void Update()
     {
+        //NFC Removed Timer
         if (VesselPresent && (Time.time - PreviousVesselTime > TimeoutTime))
         {
             VesselPresent = false;
             VesselReader = 0;
-            Debug.Log("Vessel Removed");
         }
         if (IngredientPresent && (Time.time - PreviousIngredientTime > TimeoutTime))
         {
             IngredientPresent = false;
-            Debug.Log("Ingredient Removed");
             OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
         }
     }
 
-    public void Reset()
+    public void ResetRound()
     {
         Debug.Log("Reset");
 
@@ -61,6 +57,11 @@ public class Hardware : MonoBehaviour
 
         VesselPresent = false;
         IngredientPresent = false;
+
+        ScoreScript.PreviousTime = 0f;
+        OrderScript.RoundStarted = false;
+
+        TimerScript.HasCalculated = false;
 
         //Reset Fill Animation
         OrderScript.CupAnimator.SetBool("AnimIsPouring", false);
@@ -99,7 +100,6 @@ public class Hardware : MonoBehaviour
             {
                 case "04 34 AE 4C 9E 61 80":
                     //Cup
-                    Debug.Log("Cup Present");
                     VesselPresent = true;
                     VesselReader = Reader;
                     SelectedVessel = "Cup";
@@ -108,7 +108,6 @@ public class Hardware : MonoBehaviour
 
                 case "04 5A 7D 40 9E 61 80":
                     //Mug
-                    Debug.Log("Mug Present");
                     VesselPresent = true;
                     VesselReader = Reader;
                     SelectedVessel = "Mug";
@@ -127,7 +126,6 @@ public class Hardware : MonoBehaviour
 
                 case "04 0D 66 4C 9E 61 80":
                     //Tea Bag
-                    Debug.Log("Ingredient Present");
                     IngredientPresent = true;
                     SelectedIngredient = OrderScript.IngredientSelection[1];
                     OrderScript.PourLiquid.color = new Color32(207, 163, 114, 255);
@@ -137,7 +135,6 @@ public class Hardware : MonoBehaviour
 
                 case "04 39 46 4C 9E 61 80":
                     //Coffee
-                    Debug.Log("Ingredient Present");
                     IngredientPresent = true;
                     SelectedIngredient = OrderScript.IngredientSelection[2];
                     OrderScript.PourLiquid.color = new Color32(70, 41, 25, 255);
@@ -147,7 +144,6 @@ public class Hardware : MonoBehaviour
 
                 case "04 5A 45 4C 9E 61 80":
                     //Chocolate
-                    Debug.Log("Ingredient Present");
                     IngredientPresent = true;
                     SelectedIngredient = OrderScript.IngredientSelection[3];
                     OrderScript.PourLiquid.color = new Color32(130, 80, 42, 255);

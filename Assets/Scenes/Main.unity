@@ -1178,7 +1178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1095021976
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1451,7 +1451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1190737223
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1634,8 +1634,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Current Selection:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b8893f1c41d6dff48b6edf7d4adab962, type: 2}
-  m_sharedMaterial: {fileID: 5656063168084890016, guid: b8893f1c41d6dff48b6edf7d4adab962, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d780a4df6c418434da0f218526658129, type: 2}
+  m_sharedMaterial: {fileID: -266885077239928334, guid: d780a4df6c418434da0f218526658129, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2277,6 +2277,8 @@ GameObject:
   - component: {fileID: 1713078926}
   - component: {fileID: 1713078928}
   - component: {fileID: 1713078927}
+  - component: {fileID: 1713078929}
+  - component: {fileID: 1713078930}
   - component: {fileID: 1713078925}
   - component: {fileID: 1713078924}
   m_Layer: 0
@@ -2348,7 +2350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f155677ea2db31244ad7c88195cda8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OrderScript: {fileID: 1713078928}
   RotValue: 0
   drinkFull: 0
   VesselPresent: 0
@@ -2362,8 +2363,8 @@ MonoBehaviour:
   PreviousVessel: 
   PreviousIngredient: 
   PreviousLiquid: 
-  PreviousVesselTime: 0
-  PreviousIngredientTime: 0
+  OrderScript: {fileID: 1713078928}
+  ScoreScript: {fileID: 1713078929}
 --- !u!114 &1713078928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2414,6 +2415,45 @@ MonoBehaviour:
   CupAnimator: {fileID: 2114711021}
   PourAnimator: {fileID: 107217091}
   FeedbackAnimator: {fileID: 924646028}
+  HardwareScript: {fileID: 1713078927}
+  ScoreScript: {fileID: 1713078929}
+  TimerScript: {fileID: 1713078930}
+  RoundStarted: 0
+--- !u!114 &1713078929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d04b827a300c6d49915bcebc054d36d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoodScoreValue: 0
+  BadScoreValue: 0
+  TotalScoreValue: 0
+  BonusOrders: 0
+  GoodOrders: 0
+  BadOrders: 0
+  PreviousTime: 0
+  OrderScript: {fileID: 1713078928}
+--- !u!114 &1713078930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23441af2326e4af45a89bd6e12173664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameActive: 0
+  ElapsedTime: 0
+  ScoreScript: {fileID: 1713078929}
   HardwareScript: {fileID: 1713078927}
 --- !u!1 &1923004070
 GameObject:
