@@ -10,6 +10,8 @@ public class MyMessageListener : MonoBehaviour
     [HideInInspector] public int RawRotation;
     [HideInInspector] public string NFCID;
 
+    string[] DetectableStrings = { "Rotation:", "Reader 1: Card UID: ", "Reader 2: Card UID: "};
+
     //Script References
     [Header("Script References")]
     [SerializeField] Hardware HardwareScript;
@@ -46,28 +48,39 @@ public class MyMessageListener : MonoBehaviour
     
     void Detector(string msg)
     {
-      
-        if (msg.Substring(0, 9) == "Rotation:")
+        if (msg.StartsWith(DetectableStrings[0])) //"Rotation:"
         {
-            int length = msg.Length - 9;
-            RawRotation = int.Parse(msg.Substring(9, length));
+            int charCount = CharCount(0);
+
+            RawRotation = int.Parse(msg.Substring(charCount, (msg.Length - charCount)));
             HardwareScript.Rotation(RawRotation);
         }
-        else if (msg.Substring(0, 20) == "Reader 1: Card UID: ")
+        else if (msg.StartsWith(DetectableStrings[1])) //"Reader 1: Card UID: "
         {
-            int length = msg.Length - 20;
-            NFCID = msg.Substring(20, length);
+            int charCount = CharCount(1);
+
+            NFCID = msg.Substring(charCount, (msg.Length - charCount));
             HardwareScript.NFC(NFCID, 1);
         }
-        else if (msg.Substring(0, 20) == "Reader 2: Card UID: ")
+        else if (msg.StartsWith(DetectableStrings[2])) //"Reader 2: Card UID: "
         {
-            int length = msg.Length - 20;
-            NFCID = msg.Substring(20, length);
+            int charCount = CharCount(2);
+
+            NFCID = msg.Substring(charCount, (msg.Length - charCount));
             HardwareScript.NFC(NFCID, 2);
         }
-        else
+    }
+
+    int CharCount(int stringnum)
+    {
+        int count = 0;
+
+        foreach (char c in DetectableStrings[stringnum])
         {
+            count++;
         }
+
+        return count;
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'
