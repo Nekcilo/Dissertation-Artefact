@@ -65,6 +65,9 @@ public class MyMessageListener : MonoBehaviour
             NFCID = msg.Substring(20, length);
             HardwareScript.NFC(NFCID, 2);
         }
+        else
+        {
+        }
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'

@@ -115,10 +115,9 @@ public class Order : MonoBehaviour
                 }
                 else if (!ScoreScript.FastPreparation())
                 {
+                    ScoreScript.GoodOrders += 1;
                     Debug.Log("Score +1.6");
                 }
-
-                ScoreScript.GoodOrders += 1;
             }
             else
             {
