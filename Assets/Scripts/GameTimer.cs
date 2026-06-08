@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
     [Header("Game Booleans")]
     public bool GameActive;
-    public bool HasCalculated;
-    public bool Replay = false;
+    [HideInInspector] public bool HasCalculated;
+    [HideInInspector] public bool Replay = false;
     public bool CooldownEnded;
 
     //Timer Values
@@ -18,6 +19,10 @@ public class GameTimer : MonoBehaviour
 
     public float CooldownTime = 0f;
     float CooldownLength = 5f;
+
+    //Visual Timer
+    [Header("Visual Timer")]
+    [SerializeField] RawImage TimerBar;
 
     //Script References
     [Header("Script References")]
@@ -44,17 +49,23 @@ public class GameTimer : MonoBehaviour
         }
         else if (ElapsedTime <= TimerLength)
         {
-            ElapseGame();
+            ElapseTime();
+            VisualTimer();
         }
     }
 
-    public void ElapseGame()
+    public void ElapseTime()
     {
         if (GameActive)
         {
             ElapsedTime += Time.deltaTime;
             Replay = false;
         }
+    }
+
+    void VisualTimer()
+    {
+        TimerBar.transform.localScale = new Vector3(1f, 1f, 1f); //Placeholder
     }
 
     public void ResetGame()
@@ -91,7 +102,6 @@ public class GameTimer : MonoBehaviour
     {
         if (CooldownTime >= CooldownLength)
         {
-            //Debug.Log("Cooldown Ended");
             return true;
         }
 

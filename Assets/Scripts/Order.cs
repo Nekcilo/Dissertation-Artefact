@@ -17,12 +17,12 @@ public class Order : MonoBehaviour
     //Object References
     //Text References
     [Header("Text References")]
-    public TMP_Text DebugText1; //Vessel
-    public TMP_Text DebugText2; //Ingredient
-    public TMP_Text DebugText3; //Liquid
+    public TextMeshProUGUI DebugText1; //Vessel
+    public TextMeshProUGUI DebugText2; //Ingredient
+    public TextMeshProUGUI DebugText3; //Liquid
 
-    [SerializeField] TMP_Text OrderLine1;
-    [SerializeField] TMP_Text OrderLine2;
+    [SerializeField] TextMeshProUGUI OrderLine1;
+    [SerializeField] TextMeshProUGUI OrderLine2;
 
     //SpriteRenderer Reference
     [Header("Sprite Renderer References")]
@@ -111,11 +111,15 @@ public class Order : MonoBehaviour
                 if (ScoreScript.FastPreparation())
                 {
                     ScoreScript.BonusOrders += 1;
+                    TimerScript.ElapsedTime -= 10f;
+
                     Debug.Log("BONUS! Score +3.2");
+                    
                 }
                 else if (!ScoreScript.FastPreparation())
                 {
                     ScoreScript.GoodOrders += 1;
+
                     Debug.Log("Score +1.6");
                 }
             }
@@ -125,6 +129,7 @@ public class Order : MonoBehaviour
                 FeedbackAnimator.SetBool("Neg", true);
 
                 ScoreScript.BadOrders += 1;
+                TimerScript.ElapsedTime += 5f;
 
                 Debug.Log("Score -1.4");
             }
