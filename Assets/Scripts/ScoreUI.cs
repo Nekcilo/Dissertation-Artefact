@@ -25,11 +25,16 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI BadCount;
 
     public Vector3 OriginalPos;
+    public Color colorref;
 
     private void Awake()
     {
         OriginalPos = ScoreScreen.transform.position;
-        Debug.Log(ScoreScreen.transform.position);
+
+        //ColorGrading tempCol;
+        //PostProcessVolume.profile.TryGetSettings<ColorGrading>(out tempCol);
+        //colorref = tempCol.colorFilter.value;
+        //Debug.Log(colorref);
     }
 
     public void SetUI(float GoodScoreValue, float BadScoreValue, int BonusOrders, int GoodOrders, int BadOrders, float TotalScoreValue)
@@ -46,8 +51,11 @@ public class ScoreUI : MonoBehaviour
 
     public void ShowUI()
     {
-        ScoreScreen.SetActive(true);
         PostProcessVolume.enabled = true;
+        ScoreScreen.SetActive(true);
+        
+        StartCoroutine(SmoothBlur(1.0f));
+
         StartCoroutine(SmoothMove(new Vector3(OriginalPos.x, OriginalPos.y - 175f, OriginalPos.z), OriginalPos, 1.0f));
     }
 
@@ -57,6 +65,26 @@ public class ScoreUI : MonoBehaviour
         PostProcessVolume.enabled = false;
     }
 
+    IEnumerator SmoothBlur(float seconds)
+    {
+        float t = 0.0f;
+        
+        DepthOfField tempDof;
+        ColorGrading tempCol;
+
+        PostProcessVolume.profile.TryGetSettings<DepthOfField>(out tempDof);
+        PostProcessVolume.profile.TryGetSettings<ColorGrading>(out tempCol);
+
+        while (t <= 1.0f)
+        {
+            t += Time.deltaTime / seconds;
+
+            tempDof.focusDistance.value = Mathf.Lerp(5f, 0f, Mathf.SmoothStep(0.0f, 1.0f, t));
+            tempCol.colorFilter.value = Color.Lerp(new Color(1f, 1f, 1f, 1f), new Color(0.766f, 0.658f, 0.572f, 1f), t);
+
+            yield return null;
+        }
+    }
     IEnumerator SmoothMove(Vector3 startpos, Vector3 endpos, float seconds)
     {
         float t = 0.0f;
