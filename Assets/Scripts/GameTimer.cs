@@ -7,19 +7,21 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
-    [Header("Game Booleans")]
     public bool GameActive;
     [HideInInspector] public bool HasCalculated;
     [HideInInspector] public bool Replay = false;
-    public bool CooldownEnded;
+    [HideInInspector] public int Rounds = 0;
 
     //Timer Values
     [Header("Elapsed Time")]
     public float ElapsedTime = 0f;
     float TimerLength = 60f;
 
+    //Cooldown Variables
+    [Header("Cooldown Timer")]
     public float CooldownTime = 0f;
     float CooldownLength = 5f;
+    public bool CooldownEnded;
 
     //Visual Timer
     [Header("Visual Timer")]
@@ -50,7 +52,7 @@ public class GameTimer : MonoBehaviour
             GameActive = false;
             ResetGame();
         }
-        else if (ElapsedTime <= TimerLength)
+        else if (ElapsedTime <= TimerLength && Rounds > 1)
         {
             ElapseTime();
             VisualTimer();
@@ -95,6 +97,7 @@ public class GameTimer : MonoBehaviour
                 ScoreScript.ResetScore();
                 GameActive = true;
                 ElapsedTime = 0;
+                Rounds = 0;
 
                 HardwareScript.ResetRound();
             }

@@ -55,6 +55,8 @@ public class Hardware : MonoBehaviour
     {
         Debug.Log("Reset");
 
+        Debug.Log("Round: " + TimerScript.Rounds);
+
         //Reset Variables
         SelectedIngredient = OrderScript.IngredientSelection[0];
         SelectedLiquid = OrderScript.LiquidSelection[0];

@@ -41,7 +41,7 @@ public class Order : MonoBehaviour
     [SerializeField] Score ScoreScript;
     [SerializeField] GameTimer TimerScript;
 
-    //Round Started Boolean
+    //Other Variables
     [HideInInspector] public bool RoundStarted;
 
     public int RandomInt()
@@ -60,7 +60,7 @@ public class Order : MonoBehaviour
             RoundStarted = true;
             
             if (RoundStarted)
-            {
+            { 
                 Definition = DrinkOrder[CustOrder];
 
                 HardwareScript.RequiredVessel = Definition.RequiredVessel;
@@ -75,6 +75,7 @@ public class Order : MonoBehaviour
                 {
                     DisplayOrder(Definition.DrinkName, HardwareScript.RequiredLiquid);
                     Debug.Log("Round Started");
+                    TimerScript.Rounds++;
                 }
             }
         }

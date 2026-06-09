@@ -4698,9 +4698,10 @@ MonoBehaviour:
   GameActive: 0
   HasCalculated: 0
   Replay: 0
-  CooldownEnded: 0
+  Rounds: 0
   ElapsedTime: 0
   CooldownTime: 0
+  CooldownEnded: 0
   TimerBar: {fileID: 1037455939}
   ScoreScript: {fileID: 1713078929}
   ScoreUIScript: {fileID: 1713078931}
