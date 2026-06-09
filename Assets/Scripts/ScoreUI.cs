@@ -44,7 +44,15 @@ public class ScoreUI : MonoBehaviour
     public void SetUI(float GoodScoreValue, float BadScoreValue, int BonusOrders, int GoodOrders, int BadOrders, float TotalScoreValue)
     {
         GoodScore.text = DotCalculator(("Good Drinks "), (FindLength(GoodScore)), ("£" + GoodScoreValue.ToString("0.00")));
-        BadScore.text = DotCalculator(("Bad Drinks "), (FindLength(BadScore)), ("-£" + BadScoreValue.ToString("0.00")));
+        
+        if (BadScoreValue < 0.01)
+        {
+            BadScore.text = DotCalculator(("Bad Drinks "), (FindLength(BadScore)), ("£" + BadScoreValue.ToString("0.00")));
+        }
+        else
+        {
+            BadScore.text = DotCalculator(("Bad Drinks "), (FindLength(BadScore)), ("-£" + BadScoreValue.ToString("0.00")));
+        }
 
         BonusCount.text = DotCalculator(("Bonus Orders "), (FindLength(BonusCount)), BonusOrders.ToString());
         GoodCount.text = DotCalculator(("Successful Orders "), (FindLength(GoodCount)), GoodOrders.ToString());

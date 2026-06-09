@@ -63,7 +63,7 @@ public class GameTimer : MonoBehaviour
     {
         if (GameActive)
         {
-            ElapsedTime += Time.deltaTime;
+            ElapsedTime = Mathf.Clamp(ElapsedTime += Time.deltaTime, 0, 60);
             Replay = false;
         }
     }
@@ -83,14 +83,12 @@ public class GameTimer : MonoBehaviour
             {
                 Debug.Log("Game Finished");
 
-                //HardwareScript.ResetRound();
-
                 HasCalculated = ScoreScript.TotalScoreCalculator();
 
                 ScoreUIScript.ShowUI();
             } 
 
-            if (CooldownTimer() && Replay)
+            if (Replay)
             {
                 ScoreUIScript.HideUI();
 
@@ -98,13 +96,14 @@ public class GameTimer : MonoBehaviour
                 GameActive = true;
                 ElapsedTime = 0;
                 Rounds = 0;
+                TimerBar.sizeDelta = new Vector2(1920, TimerBar.sizeDelta.y);
 
                 HardwareScript.ResetRound();
             }
         }
     }
 
-    bool CooldownTimer()
+    public bool CooldownTimer()
     {
         if (CooldownTime >= CooldownLength)
         {

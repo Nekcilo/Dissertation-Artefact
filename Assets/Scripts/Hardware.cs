@@ -95,6 +95,7 @@ public class Hardware : MonoBehaviour
         OrderScript.FeedbackAnimator.SetBool("Pos", false);
         OrderScript.FeedbackAnimator.SetBool("Neg", false);
     }
+
     public void ButtonCheck(bool ButtonPressed, int ButtonIdentifier)
     {
         if (TimerScript.GameActive)
@@ -105,7 +106,7 @@ public class Hardware : MonoBehaviour
                 SelectedLiquid = OrderScript.LiquidSelection[ButtonIdentifier];
             }
         }
-        else if (!TimerScript.GameActive)
+        else if (!TimerScript.GameActive && TimerScript.CooldownTimer())
         {
             if (TimerScript.HasCalculated && ButtonIdentifier == 1)
             {
