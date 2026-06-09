@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class ScoreUI : MonoBehaviour
 {
-    [SerializeField] GameObject ScoreScreen;
+    [SerializeField] CanvasGroup ScoreScreen;
 
     //PostProcessing
     [SerializeField] PostProcessVolume PostProcessVolume;
@@ -25,16 +25,22 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI BadCount;
 
     public Vector3 OriginalPos;
-    public Color colorref;
+    Vector3 OffsetPos;
+
+    int alphaenabled = 1;
+    int alphadisabled = 0;
+
+    bool isMoveFinished = false;
+
+    public float colorref; //To be deleted
 
     private void Awake()
     {
         OriginalPos = ScoreScreen.transform.position;
 
-        //ColorGrading tempCol;
-        //PostProcessVolume.profile.TryGetSettings<ColorGrading>(out tempCol);
-        //colorref = tempCol.colorFilter.value;
-        //Debug.Log(colorref);
+        OffsetPos = new Vector3(OriginalPos.x, OriginalPos.y - 175f, OriginalPos.z);
+
+        ScoreScreen.transform.position = OffsetPos;
     }
 
     public void SetUI(float GoodScoreValue, float BadScoreValue, int BonusOrders, int GoodOrders, int BadOrders, float TotalScoreValue)
@@ -52,47 +58,94 @@ public class ScoreUI : MonoBehaviour
     public void ShowUI()
     {
         PostProcessVolume.enabled = true;
-        ScoreScreen.SetActive(true);
         
-        StartCoroutine(SmoothBlur(1.0f));
-
-        StartCoroutine(SmoothMove(new Vector3(OriginalPos.x, OriginalPos.y - 175f, OriginalPos.z), OriginalPos, 1.0f));
+        StartCoroutine(SmoothBlur(1.0f, true));
+        StartCoroutine(SmoothMove(OffsetPos, OriginalPos, 1.0f, true));
     }
 
     public void HideUI()
     {
-        ScoreScreen.SetActive(false);
-        PostProcessVolume.enabled = false;
+        if (isMoveFinished)
+        {
+            StartCoroutine(SmoothBlur(1.0f, false));
+            StartCoroutine(SmoothMove(OffsetPos, OriginalPos, 1.0f, false));
+        }
+        else if (!isMoveFinished)
+        {
+            ScoreScreen.alpha = alphadisabled;
+            PostProcessVolume.enabled = false;
+        }
     }
 
-    IEnumerator SmoothBlur(float seconds)
+    IEnumerator SmoothBlur(float seconds, bool isEnter)
     {
-        float t = 0.0f;
-        
         DepthOfField tempDof;
         ColorGrading tempCol;
 
         PostProcessVolume.profile.TryGetSettings<DepthOfField>(out tempDof);
         PostProcessVolume.profile.TryGetSettings<ColorGrading>(out tempCol);
 
-        while (t <= 1.0f)
+        if (isEnter)
         {
-            t += Time.deltaTime / seconds;
+            float t = 0.0f;
+            while (t <= 1.0f)
+            {
+                t += Time.deltaTime / seconds;
 
-            tempDof.focusDistance.value = Mathf.Lerp(5f, 0f, Mathf.SmoothStep(0.0f, 1.0f, t));
-            tempCol.colorFilter.value = Color.Lerp(new Color(1f, 1f, 1f, 1f), new Color(0.766f, 0.658f, 0.572f, 1f), t);
+                tempDof.focusDistance.value = Mathf.Lerp(4.5f, 0.1f, Mathf.SmoothStep(0.0f, 1.0f, t));
+                tempCol.colorFilter.value = Color.Lerp(new Color(1f, 1f, 1f, 1f), new Color(0.766f, 0.658f, 0.572f, 1f), Mathf.SmoothStep(0.0f, 1.0f, t));
 
-            yield return null;
+                yield return null;
+            }
+        }
+        else if (!isEnter)
+        {
+            float t = 0.0f;
+
+            yield return new WaitForSeconds(0.15f);
+
+            while (t <= 1.0f)
+            {
+                t += Time.deltaTime / seconds;
+
+                tempDof.focusDistance.value = Mathf.Lerp(0.1f, 4.5f, Mathf.SmoothStep(0.0f, 1.0f, (t * 3f)));
+                tempCol.colorFilter.value = Color.Lerp(new Color(0.766f, 0.658f, 0.572f, 1f), new Color(1f, 1f, 1f, 1f), Mathf.SmoothStep(0.0f, 1.0f, (t * 3f)));
+
+                yield return null;
+            }
         }
     }
-    IEnumerator SmoothMove(Vector3 startpos, Vector3 endpos, float seconds)
-    {
-        float t = 0.0f;
-        while (t <= 1.0f)
+    IEnumerator SmoothMove(Vector3 startpos, Vector3 endpos, float seconds, bool isEnter)
+    {   
+        if (isEnter)
         {
-            t += Time.deltaTime / seconds;
-            ScoreScreen.transform.position = Vector3.Lerp(startpos, endpos, Mathf.SmoothStep(0.0f, 1.0f, t));
-            yield return null;
+            float t = 0.0f;
+
+            yield return new WaitForSeconds(0.35f);
+
+            while (t <= 1.0f)
+            {
+                t += Time.deltaTime / seconds;
+                ScoreScreen.alpha = Mathf.Lerp(0f, 1f, Mathf.SmoothStep(0.0f, 1.0f, t));
+                ScoreScreen.transform.position = Vector3.Lerp(startpos, endpos, Mathf.SmoothStep(0.0f, 1.0f, t));
+                yield return null;
+            }
+
+            isMoveFinished = true;
+        }
+        else if (!isEnter)
+        {
+            float t = 0.0f;
+            ScoreScreen.transform.position = endpos;
+
+            while (t <= 1.0f)
+            {
+                t += Time.deltaTime / seconds;
+                ScoreScreen.alpha = Mathf.Lerp(1f, 0f, Mathf.SmoothStep(0.0f, 1.0f, (t * 3f)));
+                yield return null;
+            }
+
+            isMoveFinished = false;
         }
     }
 
