@@ -53,7 +53,7 @@ public class Hardware : MonoBehaviour
 
     public void ResetRound()
     {
-        Debug.Log("Reset");
+        Debug.Log("Reset Round");
 
         Debug.Log("Round: " + TimerScript.Rounds);
 
@@ -74,9 +74,6 @@ public class Hardware : MonoBehaviour
         ScoreScript.PreviousTime = 0f;
         OrderScript.RoundStarted = false;
 
-        TimerScript.HasCalculated = false;
-        TimerScript.CooldownTime = 0f;
-
         //Reset Display Text
         OrderScript.DebugText1.text = "None";
         OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
@@ -88,8 +85,6 @@ public class Hardware : MonoBehaviour
 
     public void ResetAnim()
     {
-        Debug.Log("Reset Anim");
-
         OrderScript.CupAnimator.SetBool("AnimIsPouring", false);
 
         OrderScript.FeedbackAnimator.SetBool("Pos", false);

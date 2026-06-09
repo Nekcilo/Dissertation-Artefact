@@ -21,7 +21,6 @@ public class GameTimer : MonoBehaviour
     [Header("Cooldown Timer")]
     public float CooldownTime = 0f;
     float CooldownLength = 5f;
-    public bool CooldownEnded;
 
     //Visual Timer
     [Header("Visual Timer")]
@@ -41,8 +40,6 @@ public class GameTimer : MonoBehaviour
 
         HardwareScript.ResetRound();
         HardwareScript.ResetAnim();
-
-        Debug.Log("TimerBar Size: " + TimerBar.sizeDelta);
     }
 
     private void Update()
@@ -93,10 +90,14 @@ public class GameTimer : MonoBehaviour
                 ScoreUIScript.HideUI();
 
                 ScoreScript.ResetScore();
-                GameActive = true;
+
                 ElapsedTime = 0;
                 Rounds = 0;
+                CooldownTime = 0f;
+                HasCalculated = false;
                 TimerBar.sizeDelta = new Vector2(1920, TimerBar.sizeDelta.y);
+
+                GameActive = true;
 
                 HardwareScript.ResetRound();
             }

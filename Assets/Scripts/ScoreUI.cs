@@ -58,7 +58,14 @@ public class ScoreUI : MonoBehaviour
         GoodCount.text = DotCalculator(("Successful Orders "), (FindLength(GoodCount)), GoodOrders.ToString());
         BadCount.text = DotCalculator(("Unsuccessful Orders "), (FindLength(BadCount)), BadOrders.ToString());
 
-        TotalScore.text = "Total: £" + TotalScoreValue.ToString("0.00");
+        if (TotalScoreValue < 0)
+        {
+            TotalScore.text = "Total: -£" + (-TotalScoreValue).ToString("0.00");
+        }
+        else
+        {
+            TotalScore.text = "Total: £" + TotalScoreValue.ToString("0.00");
+        }
     }
 
     public void ShowUI()
@@ -161,7 +168,7 @@ public class ScoreUI : MonoBehaviour
 
         textComponent.ForceMeshUpdate(true);
 
-        Debug.Log("[" + textComponent.name + "]" + " Character Count: " + textComponent.textInfo.characterCount);
+        //Debug.Log("[" + textComponent.name + "]" + " Character Count: " + textComponent.textInfo.characterCount);
 
         for (int i = 0; length < textComponent.textInfo.characterCount; ++i)
         {

@@ -74,7 +74,6 @@ public class Order : MonoBehaviour
                 else
                 {
                     DisplayOrder(Definition.DrinkName, HardwareScript.RequiredLiquid);
-                    Debug.Log("Round Started");
                     TimerScript.Rounds++;
                 }
             }
@@ -106,7 +105,6 @@ public class Order : MonoBehaviour
         {
             if (HardwareScript.SelectedVessel == HardwareScript.RequiredVessel && HardwareScript.SelectedIngredient == HardwareScript.RequiredIngredient && HardwareScript.SelectedLiquid == HardwareScript.RequiredLiquid)
             {
-                //FeedbackAnimator.SetBool("Neg", false);
                 FeedbackAnimator.SetBool("Pos", true);
 
                 if (ScoreScript.FastPreparation())
@@ -114,25 +112,24 @@ public class Order : MonoBehaviour
                     ScoreScript.BonusOrders += 1;
                     TimerScript.ElapsedTime -= 10f;
 
-                    Debug.Log("BONUS! Score +3.2");
+                    //Debug.Log("BONUS! Score +3.2");
                     
                 }
                 else if (!ScoreScript.FastPreparation())
                 {
                     ScoreScript.GoodOrders += 1;
 
-                    Debug.Log("Score +1.6");
+                    //Debug.Log("Score +1.6");
                 }
             }
             else
             {
-                //FeedbackAnimator.SetBool("Pos", false);
                 FeedbackAnimator.SetBool("Neg", true);
 
                 ScoreScript.BadOrders += 1;
                 TimerScript.ElapsedTime += 5f;
 
-                Debug.Log("Score -1.4");
+                //Debug.Log("Score -1.4");
             }
 
             HardwareScript.PreviousVessel = HardwareScript.RequiredVessel;
