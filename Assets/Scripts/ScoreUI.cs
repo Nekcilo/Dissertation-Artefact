@@ -32,8 +32,6 @@ public class ScoreUI : MonoBehaviour
 
     bool isMoveFinished = false;
 
-    public float colorref; //To be deleted
-
     private void Awake()
     {
         OriginalPos = ScoreScreen.transform.position;

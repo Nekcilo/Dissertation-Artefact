@@ -2529,7 +2529,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 960, y: -540}
-  m_SizeDelta: {x: 100, y: 50}
+  m_SizeDelta: {x: 1920, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1037455940
 MonoBehaviour:
@@ -4701,7 +4701,7 @@ MonoBehaviour:
   CooldownEnded: 0
   ElapsedTime: 0
   CooldownTime: 0
-  TimerBar: {fileID: 1037455940}
+  TimerBar: {fileID: 1037455939}
   ScoreScript: {fileID: 1713078929}
   ScoreUIScript: {fileID: 1713078931}
   HardwareScript: {fileID: 1713078927}
@@ -4726,7 +4726,6 @@ MonoBehaviour:
   GoodCount: {fileID: 694081676}
   BadCount: {fileID: 62060617}
   OriginalPos: {x: 0, y: 0, z: 0}
-  colorref: 0
 --- !u!1 &1784030289
 GameObject:
   m_ObjectHideFlags: 0

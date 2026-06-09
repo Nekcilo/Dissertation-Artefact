@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,7 @@ public class GameTimer : MonoBehaviour
 
     //Visual Timer
     [Header("Visual Timer")]
-    [SerializeField] RawImage TimerBar;
+    [SerializeField] RectTransform TimerBar;
 
     //Script References
     [Header("Script References")]
@@ -38,6 +39,8 @@ public class GameTimer : MonoBehaviour
 
         HardwareScript.ResetRound();
         HardwareScript.ResetAnim();
+
+        Debug.Log("TimerBar Size: " + TimerBar.sizeDelta);
     }
 
     private void Update()
@@ -65,7 +68,7 @@ public class GameTimer : MonoBehaviour
 
     void VisualTimer()
     {
-        TimerBar.transform.localScale = new Vector3(1f, 1f, 1f); //Placeholder
+        TimerBar.sizeDelta = new Vector2(((1920 - (ElapsedTime / TimerLength) * 1920)), TimerBar.sizeDelta.y);
     }
 
     public void ResetGame()
