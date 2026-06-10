@@ -35,6 +35,7 @@ public class Hardware : MonoBehaviour
     [SerializeField] Order OrderScript;
     [SerializeField] Score ScoreScript;
     [SerializeField] GameTimer TimerScript;
+    [SerializeField] VisualDrink DrinkSwapScript;
 
     private void Update()
     {
@@ -43,11 +44,16 @@ public class Hardware : MonoBehaviour
         {
             VesselPresent = false;
             VesselReader = 0;
+            SelectedVessel = OrderScript.VesselSelection[0];
+            OrderScript.DebugText1.text = OrderScript.VesselSelection[0];
+            DrinkSwapScript.VesselSwap(SelectedVessel);
         }
         if (IngredientPresent && (Time.time - PreviousIngredientTime > TimeoutTime))
         {
             IngredientPresent = false;
+            SelectedIngredient = OrderScript.IngredientSelection[0];
             OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
+            DrinkSwapScript.IngredientSwap(SelectedIngredient);
         }
     }
 
@@ -58,9 +64,15 @@ public class Hardware : MonoBehaviour
         Debug.Log("Round: " + TimerScript.Rounds);
 
         //Reset Variables
+        SelectedVessel = OrderScript.VesselSelection[0];
         SelectedIngredient = OrderScript.IngredientSelection[0];
         SelectedLiquid = OrderScript.LiquidSelection[0];
 
+        DrinkSwapScript.VesselSwap(SelectedVessel);
+        DrinkSwapScript.IngredientSwap(SelectedIngredient);
+        DrinkSwapScript.LiquidSwap(SelectedLiquid);
+
+        RequiredVessel = OrderScript.VesselSelection[0];
         RequiredIngredient = OrderScript.IngredientSelection[0];
         RequiredLiquid = OrderScript.LiquidSelection[0];
 
@@ -75,7 +87,7 @@ public class Hardware : MonoBehaviour
         OrderScript.RoundStarted = false;
 
         //Reset Display Text
-        OrderScript.DebugText1.text = "None";
+        OrderScript.DebugText1.text = OrderScript.VesselSelection[0];
         OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
         OrderScript.DebugText3.text = OrderScript.LiquidSelection[0];
 
@@ -99,6 +111,7 @@ public class Hardware : MonoBehaviour
             {
                 OrderScript.DebugText3.text = (OrderScript.LiquidSelection[ButtonIdentifier]);
                 SelectedLiquid = OrderScript.LiquidSelection[ButtonIdentifier];
+                DrinkSwapScript.LiquidSwap(SelectedLiquid);
             }
         }
         else if (!TimerScript.GameActive && TimerScript.CooldownTimer())
@@ -119,35 +132,35 @@ public class Hardware : MonoBehaviour
                 PreviousVesselTime = Time.time;
             }
 
-
             if (!LiquidPoured && !VesselPresent)
             {
                 switch (NFCID)
 
                 {
-                    case "04 34 AE 4C 9E 61 80":
-                        //Cup
-                        VesselPresent = true;
-                        VesselReader = Reader;
-                        SelectedVessel = "Cup";
-                        PreviousVesselTime = Time.time;
-                        break;
-
                     case "04 5A 7D 40 9E 61 80":
                         //Mug
                         VesselPresent = true;
                         VesselReader = Reader;
-                        SelectedVessel = "Mug";
+                        SelectedVessel = OrderScript.VesselSelection[1];
+                        PreviousVesselTime = Time.time;
+                        break;
+
+                    case "04 34 AE 4C 9E 61 80":
+                        //Cup
+                        VesselPresent = true;
+                        VesselReader = Reader;
+                        SelectedVessel = OrderScript.VesselSelection[2];
                         PreviousVesselTime = Time.time;
                         break;
 
                     default:
                         //Nothing Detected
-                        SelectedVessel = "None";
+                        SelectedVessel = OrderScript.VesselSelection[0];
                         break;
                 }
 
                 OrderScript.DebugText1.text = (SelectedVessel);
+                DrinkSwapScript.VesselSwap(SelectedVessel);
             }
 
             if (!LiquidPoured && VesselPresent && Reader != VesselReader)
@@ -159,8 +172,6 @@ public class Hardware : MonoBehaviour
                         //Tea Bag
                         IngredientPresent = true;
                         SelectedIngredient = OrderScript.IngredientSelection[1];
-                        OrderScript.PourLiquid.color = new Color32(207, 163, 114, 255);
-                        OrderScript.CupLiquid.color = new Color32(207, 163, 114, 255);
                         PreviousIngredientTime = Time.time;
                         break;
 
@@ -168,8 +179,6 @@ public class Hardware : MonoBehaviour
                         //Coffee
                         IngredientPresent = true;
                         SelectedIngredient = OrderScript.IngredientSelection[2];
-                        OrderScript.PourLiquid.color = new Color32(70, 41, 25, 255);
-                        OrderScript.CupLiquid.color = new Color32(70, 41, 25, 255);
                         PreviousIngredientTime = Time.time;
                         break;
 
@@ -177,8 +186,6 @@ public class Hardware : MonoBehaviour
                         //Chocolate
                         IngredientPresent = true;
                         SelectedIngredient = OrderScript.IngredientSelection[3];
-                        OrderScript.PourLiquid.color = new Color32(130, 80, 42, 255);
-                        OrderScript.CupLiquid.color = new Color32(130, 80, 42, 255);
                         PreviousIngredientTime = Time.time;
                         break;
 
@@ -189,6 +196,7 @@ public class Hardware : MonoBehaviour
                 }
 
                 OrderScript.DebugText2.text = (SelectedIngredient);
+                DrinkSwapScript.IngredientSwap(SelectedIngredient);
             }
         }    
     }

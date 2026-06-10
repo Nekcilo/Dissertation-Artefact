@@ -32,7 +32,7 @@ public class GameTimer : MonoBehaviour
     [SerializeField] ScoreUI ScoreUIScript;
     [SerializeField] Hardware HardwareScript;
 
-    private void Awake()
+    private void Start()
     {
         ScoreUIScript.HideUI();
 

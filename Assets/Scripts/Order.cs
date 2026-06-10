@@ -11,6 +11,7 @@ public class Order : MonoBehaviour
     private DrinkDefiniton Definition;
 
     //Selection Arrays
+    [HideInInspector] public string[] VesselSelection = { "None", "Mug", "Cup"};
     [HideInInspector] public string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
     [HideInInspector] public string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
 
@@ -40,6 +41,7 @@ public class Order : MonoBehaviour
     [SerializeField] Hardware HardwareScript;
     [SerializeField] Score ScoreScript;
     [SerializeField] GameTimer TimerScript;
+    [SerializeField] VisualDrink DrinkSwapScript;
 
     //Other Variables
     [HideInInspector] public bool RoundStarted;
@@ -103,6 +105,8 @@ public class Order : MonoBehaviour
     {
         if (TimerScript.GameActive)
         {
+            DrinkSwapScript.DrinkSwap(HardwareScript.SelectedVessel, HardwareScript.SelectedIngredient, HardwareScript.SelectedLiquid);
+
             if (HardwareScript.SelectedVessel == HardwareScript.RequiredVessel && HardwareScript.SelectedIngredient == HardwareScript.RequiredIngredient && HardwareScript.SelectedLiquid == HardwareScript.RequiredLiquid)
             {
                 FeedbackAnimator.SetBool("Pos", true);
@@ -111,15 +115,11 @@ public class Order : MonoBehaviour
                 {
                     ScoreScript.BonusOrders += 1;
                     TimerScript.ElapsedTime -= 10f;
-
-                    //Debug.Log("BONUS! Score +3.2");
                     
                 }
                 else if (!ScoreScript.FastPreparation())
                 {
                     ScoreScript.GoodOrders += 1;
-
-                    //Debug.Log("Score +1.6");
                 }
             }
             else
@@ -128,8 +128,6 @@ public class Order : MonoBehaviour
 
                 ScoreScript.BadOrders += 1;
                 TimerScript.ElapsedTime += 5f;
-
-                //Debug.Log("Score -1.4");
             }
 
             HardwareScript.PreviousVessel = HardwareScript.RequiredVessel;

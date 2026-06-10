@@ -58,18 +58,9 @@ public class Score : MonoBehaviour
         //Good + Bad Scores £
         GoodScoreValue += ((GoodOrders * 1.60f) + (BonusOrders * 3.20f));
         BadScoreValue += (BadOrders * 1.40f);
-        //Debug.Log("Good Drinks: £" + GoodScoreValue.ToString("0.00"));
-        //Debug.Log("Bad Drinks: £" + BadScoreValue.ToString("0.00"));
-
-
-        ////Individual Bonus + Good Order Counts
-        //Debug.Log("Bonus Drinks: " + BonusOrders);
-        //Debug.Log("Good Drinks: " + GoodOrders);
-        //Debug.Log("Bad Drinks: " + BadOrders);
 
         ////Total Score
         TotalScoreValue = GoodScoreValue - BadScoreValue;
-        //Debug.Log("Total: £" + TotalScoreValue.ToString("0.00"));
 
         ScoreUIScript.SetUI(GoodScoreValue, BadScoreValue, BonusOrders, GoodOrders, BadOrders, TotalScoreValue);
 
