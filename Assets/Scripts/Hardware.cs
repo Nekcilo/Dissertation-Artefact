@@ -27,7 +27,8 @@ public class Hardware : MonoBehaviour
     bool LiquidPoured;
     float PreviousVesselTime;
     float PreviousIngredientTime;
-    float TimeoutTime = 0.5f;
+    float VesselTimeoutTime = 0.5f;
+    float IngredientTimeoutTime = 1.2f;
     int VesselReader;
 
     //Script References
@@ -40,7 +41,7 @@ public class Hardware : MonoBehaviour
     private void Update()
     {
         //NFC Removed Timer
-        if (VesselPresent && (Time.time - PreviousVesselTime > TimeoutTime))
+        if (VesselPresent && (Time.time - PreviousVesselTime > VesselTimeoutTime))
         {
             VesselPresent = false;
             VesselReader = 0;
@@ -48,7 +49,7 @@ public class Hardware : MonoBehaviour
             OrderScript.DebugText1.text = OrderScript.VesselSelection[0];
             DrinkSwapScript.VesselSwap();
         }
-        if (IngredientPresent && (Time.time - PreviousIngredientTime > TimeoutTime))
+        if (IngredientPresent && (Time.time - PreviousIngredientTime > IngredientTimeoutTime))
         {
             IngredientPresent = false;
             SelectedIngredient = OrderScript.IngredientSelection[0];
