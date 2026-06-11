@@ -103,9 +103,12 @@ public class Order : MonoBehaviour
 
     public void DrinkCheck()
     {
+        Debug.Log("Drink Check !");
+
         if (TimerScript.GameActive)
         {
-            DrinkSwapScript.DrinkSwap(HardwareScript.SelectedVessel, HardwareScript.SelectedIngredient, HardwareScript.SelectedLiquid);
+            Debug.Log("Drink Check & Game Active");
+            //DrinkSwapScript.DrinkSwap();
 
             if (HardwareScript.SelectedVessel == HardwareScript.RequiredVessel && HardwareScript.SelectedIngredient == HardwareScript.RequiredIngredient && HardwareScript.SelectedLiquid == HardwareScript.RequiredLiquid)
             {

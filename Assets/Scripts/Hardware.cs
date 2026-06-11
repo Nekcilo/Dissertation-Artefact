@@ -46,14 +46,14 @@ public class Hardware : MonoBehaviour
             VesselReader = 0;
             SelectedVessel = OrderScript.VesselSelection[0];
             OrderScript.DebugText1.text = OrderScript.VesselSelection[0];
-            DrinkSwapScript.VesselSwap(SelectedVessel);
+            DrinkSwapScript.VesselSwap();
         }
         if (IngredientPresent && (Time.time - PreviousIngredientTime > TimeoutTime))
         {
             IngredientPresent = false;
             SelectedIngredient = OrderScript.IngredientSelection[0];
             OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
-            DrinkSwapScript.IngredientSwap(SelectedIngredient);
+            DrinkSwapScript.IngredientSwap();
         }
     }
 
@@ -68,9 +68,7 @@ public class Hardware : MonoBehaviour
         SelectedIngredient = OrderScript.IngredientSelection[0];
         SelectedLiquid = OrderScript.LiquidSelection[0];
 
-        DrinkSwapScript.VesselSwap(SelectedVessel);
-        DrinkSwapScript.IngredientSwap(SelectedIngredient);
-        DrinkSwapScript.LiquidSwap(SelectedLiquid);
+        DrinkSwapScript.ResetVisual();
 
         RequiredVessel = OrderScript.VesselSelection[0];
         RequiredIngredient = OrderScript.IngredientSelection[0];
@@ -111,7 +109,7 @@ public class Hardware : MonoBehaviour
             {
                 OrderScript.DebugText3.text = (OrderScript.LiquidSelection[ButtonIdentifier]);
                 SelectedLiquid = OrderScript.LiquidSelection[ButtonIdentifier];
-                DrinkSwapScript.LiquidSwap(SelectedLiquid);
+                DrinkSwapScript.LiquidSwap();
             }
         }
         else if (!TimerScript.GameActive && TimerScript.CooldownTimer())
@@ -160,7 +158,7 @@ public class Hardware : MonoBehaviour
                 }
 
                 OrderScript.DebugText1.text = (SelectedVessel);
-                DrinkSwapScript.VesselSwap(SelectedVessel);
+                DrinkSwapScript.VesselSwap();
             }
 
             if (!LiquidPoured && VesselPresent && Reader != VesselReader)
@@ -196,7 +194,7 @@ public class Hardware : MonoBehaviour
                 }
 
                 OrderScript.DebugText2.text = (SelectedIngredient);
-                DrinkSwapScript.IngredientSwap(SelectedIngredient);
+                DrinkSwapScript.IngredientSwap();
             }
         }    
     }

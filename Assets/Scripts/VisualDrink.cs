@@ -1,7 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class VisualDrink : MonoBehaviour
@@ -47,20 +46,50 @@ public class VisualDrink : MonoBehaviour
         }
         Insert = list.ToArray();
 
-        //Debug Checks
-        for (int i = 0; i < Vessel.Length; i++)
-        {
-            Debug.Log("Index " + i + ": " + Vessel[i]);
-        }
-        for (int i = 0; i < Insert.Length ; i++)
-        {
-            Debug.Log("Index " + i + ": " + Insert[i]);
-        }
+
+        //VESSEL ARRAY INDEX
+        //Index 0: Mug
+        //Index 1: Cup
+
+
+        //INSERT ARRAY INDEX
+        //Index 0: Black Coffee (Mug)
+        //Index 1: White Coffee(Mug)
+        //Index 2: Black Tea(Mug)
+        //Index 3: Milk Tea(Mug)
+        //Index 4: Hot Chocolate(Water) (Mug)
+        //Index 5: Hot Chocolate(Mug)
+
+        //Index 6: Iced Black Coffee(Cup)
+        //Index 7: Iced White Coffee(Cup)
+        //Index 8: Iced Black Tea(Cup)
+        //Index 9: Iced Milk Tea(Cup)
+        //Index 10: Iced Chocolate Milk(Cup)
+        //Index 11: Chocolate Milk(Cup)
+
+
+        ////Debug Checks
+        //for (int i = 0; i < Vessel.Length; i++)
+        //{
+        //    Debug.Log("Index " + i + ": " + Vessel[i]);
+        //}
+        //for (int i = 0; i < Insert.Length ; i++)
+        //{
+        //    Debug.Log("Index " + i + ": " + Insert[i]);
+        //}
     }
 
-    public void VesselSwap(string SelectedVessel) //For Visually Changing the Vessel
+    public void ResetVisual()
     {
-        switch (SelectedVessel)
+        VesselSwap();
+        IngredientSwap();
+        LiquidSwap();
+        DrinkSwap();
+    }
+
+    public void VesselSwap() //For Visually Changing the Vessel
+    {
+        switch (HardwareScript.SelectedVessel)
         {
             case "Mug":
                 Vessel[0].SetActive(true);
@@ -77,39 +106,50 @@ public class VisualDrink : MonoBehaviour
         }
     }
     
-    public void IngredientSwap(string SelectedIngredient) //For Visually Changing the Ingredient Indicator
+    public void IngredientSwap() //For Visually Changing the Ingredient Indicator
     {
-        Debug.Log("IngredientSwap, SelectedIngredient: " + SelectedIngredient);
+        Debug.Log("IngredientSwap, SelectedIngredient: " + HardwareScript.SelectedIngredient);
     }
 
-    public void LiquidSwap(string SelectedLiquid) //For Visually Changing the Liquid Indicator AND Liquid Pour Colour
+    public void LiquidSwap() //For Visually Changing the Liquid Indicator AND Liquid Pour Colour
     {
-        if (SelectedLiquid == OrderScript.LiquidSelection[1]) //Water
+        if (HardwareScript.SelectedLiquid == OrderScript.LiquidSelection[1]) //Water
         {
             OrderScript.PourLiquid.color = new Color32(207, 163, 114, 255);
             OrderScript.CupLiquid.color = new Color32(207, 163, 114, 255);
         }
-        if (SelectedLiquid == OrderScript.LiquidSelection[2]) //Cow Milk
+        if (HardwareScript.SelectedLiquid == OrderScript.LiquidSelection[2]) //Cow Milk
         {
             OrderScript.PourLiquid.color = new Color32(70, 41, 25, 255);
             OrderScript.CupLiquid.color = new Color32(70, 41, 25, 255);
         }
-        if (SelectedLiquid == OrderScript.LiquidSelection[3]) //Oat Milk
+        if (HardwareScript.SelectedLiquid == OrderScript.LiquidSelection[3]) //Oat Milk
         {
             OrderScript.PourLiquid.color = new Color32(130, 80, 42, 255);
             OrderScript.CupLiquid.color = new Color32(130, 80, 42, 255);
         }
     }
 
-    public void DrinkSwap(string SelectedVessel, string SelectedIngredient, string SelectedLiquid) //For Visually Changing the Insert of the drink as it is rising
+    public void DrinkSwap() //For Visually Changing the Insert of the drink as it is rising
     {
-        if (SelectedVessel == "Cup")
+        //HardwareScript.SelectedVessel;
+        //HardwareScript.SelectedIngredient;
+        //HardwareScript.SelectedLiquid;
+
+        if (HardwareScript.SelectedVessel == "Cup")
         {
 
         }
-        else if (SelectedVessel == "Mug")
+        else if (HardwareScript.SelectedVessel == "Mug")
         {
 
+        }
+        else
+        {
+            for (int i = 0; i < Insert.Length; i++)
+            {
+                Insert[i].SetActive(false);
+            }
         }
     }
 

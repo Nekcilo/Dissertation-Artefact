@@ -19,6 +19,7 @@ public class AnimTrigger : MonoBehaviour
         HardwareScript.drinkFull = true;
         OrderScript.PourAnimator.SetBool("AnimIsPouring", false);
     }
+
     public void ExitPourAnim()
     {
         HardwareScript.ResetAnim();
