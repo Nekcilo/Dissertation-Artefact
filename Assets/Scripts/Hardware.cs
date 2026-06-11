@@ -28,7 +28,7 @@ public class Hardware : MonoBehaviour
     float PreviousVesselTime;
     float PreviousIngredientTime;
     float VesselTimeoutTime = 0.5f;
-    float IngredientTimeoutTime = 1.2f;
+  //  float IngredientTimeoutTime = 1.2f;
     int VesselReader;
 
     //Script References
@@ -48,14 +48,20 @@ public class Hardware : MonoBehaviour
             SelectedVessel = OrderScript.VesselSelection[0];
             OrderScript.DebugText1.text = OrderScript.VesselSelection[0];
             DrinkSwapScript.VesselSwap();
-        }
-        if (IngredientPresent && (Time.time - PreviousIngredientTime > IngredientTimeoutTime))
-        {
+
+            //for ingredient, will timeout when vessel removed to help with consistency issues
             IngredientPresent = false;
             SelectedIngredient = OrderScript.IngredientSelection[0];
             OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
             DrinkSwapScript.IngredientSwap();
         }
+       /* if (IngredientPresent && (Time.time - PreviousIngredientTime > IngredientTimeoutTime))
+        {
+            IngredientPresent = false;
+            SelectedIngredient = OrderScript.IngredientSelection[0];
+            OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
+            DrinkSwapScript.IngredientSwap();
+        }*/
 
         // TEMP REMOVE LATER ISTG DO NOT FORGET
         if (Input.GetKeyDown(KeyCode.Alpha1)) ButtonCheck(true, 1); 
