@@ -88,6 +88,6 @@ public class MyMessageListener : MonoBehaviour
     // failure to connect.
     void OnConnectionEvent(bool success)
     {
-        Debug.Log(success ? "Device connected" : "Device disconnected");
+       // Debug.Log(success ? "Device connected" : "Device disconnected");
     }
 }

@@ -13,6 +13,10 @@ public class VisualDrink : MonoBehaviour
     [SerializeField] GameObject MugInserts;
     [SerializeField] GameObject CupInserts;
 
+    [Header("Mask References")]
+    [SerializeField] Transform MugMask;
+    [SerializeField] Transform CupMask;
+
     [Header("GameObject Arrays")]
     public GameObject[] Vessel = {};
     public GameObject[] Insert = {};
@@ -21,6 +25,10 @@ public class VisualDrink : MonoBehaviour
     [Header("Script References")]
     [SerializeField] Hardware HardwareScript;
     [SerializeField] Order OrderScript;
+
+    private Vector3 OriginalMugMaskScale, OriginalCupMaskScale;
+
+    private float FillDuration = 2.0f;
 
     private void Awake()
     {
@@ -46,6 +54,8 @@ public class VisualDrink : MonoBehaviour
         }
         Insert = list.ToArray();
 
+        OriginalMugMaskScale = MugMask.localScale;
+        OriginalCupMaskScale = CupMask.localScale;
 
         //VESSEL ARRAY INDEX
         //Index 0: Mug
@@ -81,6 +91,8 @@ public class VisualDrink : MonoBehaviour
 
     public void ResetVisual()
     {
+        StopAllCoroutines();
+
         VesselSwap();
         IngredientSwap();
         LiquidSwap();
@@ -132,25 +144,82 @@ public class VisualDrink : MonoBehaviour
 
     public void DrinkSwap() //For Visually Changing the Insert of the drink as it is rising
     {
-        //HardwareScript.SelectedVessel;
-        //HardwareScript.SelectedIngredient;
-        //HardwareScript.SelectedLiquid;
-
-        if (HardwareScript.SelectedVessel == "Cup")
+        for (int i = 0; i < Insert.Length; i++)
         {
-
+            Insert[i].SetActive(false);
         }
-        else if (HardwareScript.SelectedVessel == "Mug")
-        {
 
-        }
-        else
+        if (HardwareScript.SelectedVessel == "None" ||
+            HardwareScript.SelectedIngredient == "None" ||
+            HardwareScript.SelectedLiquid == "None")
         {
-            for (int i = 0; i < Insert.Length; i++)
+            return;
+        }
+
+        int TargetIndex = -1;
+        Transform ActiveMask = null;
+        Vector3 TargetMaskScale = Vector3.zero;
+
+        if (HardwareScript.SelectedVessel == "Mug")
+        {
+            ActiveMask = MugMask;
+            TargetMaskScale = OriginalMugMaskScale;
+
+            if (HardwareScript.SelectedIngredient == "Coffee")
             {
-                Insert[i].SetActive(false);
+                TargetIndex = (HardwareScript.SelectedLiquid == "Water") ? 0 : 1;
             }
+            else if (HardwareScript.SelectedIngredient == "Tea")
+            {
+                TargetIndex = (HardwareScript.SelectedLiquid == "Water") ? 2 : 3;
+            }
+            else if (HardwareScript.SelectedIngredient == "Chocolate")
+            {
+                TargetIndex = (HardwareScript.SelectedLiquid == "Water") ? 4 : 5;
+            }
+        }
+        else if (HardwareScript.SelectedVessel == "Cup")
+        {
+            ActiveMask = CupMask;
+            TargetMaskScale = OriginalCupMaskScale;
+
+            if (HardwareScript.SelectedIngredient == "Coffee")
+            {
+                TargetIndex = (HardwareScript.SelectedLiquid == "Water") ? 6 : 7; // comedy
+            }
+            else if (HardwareScript.SelectedIngredient == "Tea")
+            {
+                TargetIndex = (HardwareScript.SelectedLiquid == "Water") ? 8 : 9;
+            }
+            else if (HardwareScript.SelectedIngredient == "Chocolate")
+            {
+                TargetIndex = (HardwareScript.SelectedLiquid == "Water") ? 10 : 11;
+            }
+        }
+
+        if (TargetIndex != -1 && TargetIndex < Insert.Length && ActiveMask != null)
+        {
+            Insert[TargetIndex].SetActive(true);
+            StartCoroutine(FillMask(ActiveMask, TargetMaskScale));
         }
     }
 
+    IEnumerator FillMask(Transform Mask, Vector3 TargetScale)
+    {
+        float ElapsedTime = 0f;
+
+        Mask.localScale = new Vector3(TargetScale.x, 0f, TargetScale.y);
+        while (ElapsedTime < FillDuration)
+        {
+            ElapsedTime += Time.deltaTime;
+            float newY = Mathf.Lerp(0f, TargetScale.y, ElapsedTime / FillDuration);
+            Mask.localScale = new Vector3(TargetScale.x, newY, TargetScale.z);
+
+            yield return null;
+        }
+        Mask.localScale = TargetScale;
+
+        HardwareScript.drinkFull = true;
+        OrderScript.PourAnimator.SetBool("AnimIsPouring", false);
+    }
 }

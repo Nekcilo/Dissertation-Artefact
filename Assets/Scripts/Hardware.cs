@@ -55,6 +55,20 @@ public class Hardware : MonoBehaviour
             OrderScript.DebugText2.text = OrderScript.IngredientSelection[0];
             DrinkSwapScript.IngredientSwap();
         }
+
+        // TEMP REMOVE LATER ISTG DO NOT FORGET
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ButtonCheck(true, 1); 
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ButtonCheck(true, 2); 
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ButtonCheck(true, 3); 
+
+        if (Input.GetKey(KeyCode.Q)) NFC("04 5A 7D 40 9E 61 80", 1); 
+        if (Input.GetKey(KeyCode.W)) NFC("04 34 AE 4C 9E 61 80", 1);
+
+        if (Input.GetKey(KeyCode.A)) NFC("04 0D 66 4C 9E 61 80", 2); 
+        if (Input.GetKey(KeyCode.S)) NFC("04 39 46 4C 9E 61 80", 2); 
+        if (Input.GetKey(KeyCode.D)) NFC("04 5A 45 4C 9E 61 80", 2);
+
+        if (Input.GetKeyDown(KeyCode.Space)) Rotation(100);
     }
 
     public void ResetRound()
@@ -96,6 +110,7 @@ public class Hardware : MonoBehaviour
     public void ResetAnim()
     {
         OrderScript.CupAnimator.SetBool("AnimIsPouring", false);
+        OrderScript.PourAnimator.SetBool("AnimIsPouring", false);
 
         OrderScript.FeedbackAnimator.SetBool("Pos", false);
         OrderScript.FeedbackAnimator.SetBool("Neg", false);
@@ -211,6 +226,7 @@ public class Hardware : MonoBehaviour
                 if (RotValue < 205 && !drinkFull)
                 {
                     LiquidPoured = true;
+                    DrinkSwapScript.DrinkSwap();
                     OrderScript.PourAnimator.SetBool("AnimIsPouring", true);
                 }
                 else if (drinkFull)

@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: vessel
+    uniqueID: 3835042271
+    locked: 0
+  - name: stream
+    uniqueID: 967877739
+    locked: 0
