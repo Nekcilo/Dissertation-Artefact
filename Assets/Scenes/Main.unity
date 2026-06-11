@@ -5562,9 +5562,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 568a49a3755640f4ba372eebc3b7ebd2, type: 2}
   VesselSelection:
   - None
-  - Tea
-  - Coffee
-  - Chocolate
+  - Mug
+  - Cup
   IngredientSelection:
   - None
   - Tea

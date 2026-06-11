@@ -11,7 +11,7 @@ public class Order : MonoBehaviour
     private DrinkDefiniton Definition;
 
     //Selection Arrays
-    [HideInInspector] public string[] VesselSelection = { "None", "Mug", "Cup"};
+    public string[] VesselSelection = { "None", "Mug", "Cup"};
     [HideInInspector] public string[] IngredientSelection = { "None", "Tea", "Coffee", "Chocolate" };
     [HideInInspector] public string[] LiquidSelection = { "None", "Water", "Cow", "Oat" };
 

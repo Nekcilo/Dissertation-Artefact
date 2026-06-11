@@ -62,11 +62,11 @@ public class VisualDrink : MonoBehaviour
     {
         switch (SelectedVessel)
         {
-            case "Tea": //Incorrect
+            case "Mug":
                 Vessel[0].SetActive(true);
             break;
 
-            case "Coffee": //Incorrect
+            case "Cup":
                 Vessel[1].SetActive(true);
                 break;
 
