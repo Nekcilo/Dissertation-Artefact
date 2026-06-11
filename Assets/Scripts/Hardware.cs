@@ -6,7 +6,7 @@ public class Hardware : MonoBehaviour
 {
     //Public Variables
     [HideInInspector] public int RotValue;
-    [HideInInspector] public bool drinkFull;
+    public bool drinkFull;
 
     //NFC Presence Checks
     [HideInInspector] public bool VesselPresent = false;
@@ -161,7 +161,7 @@ public class Hardware : MonoBehaviour
                 DrinkSwapScript.VesselSwap();
             }
 
-            if (!LiquidPoured && VesselPresent && Reader != VesselReader)
+            if (VesselPresent && Reader != VesselReader)
             {
                 switch (NFCID)
                 {
