@@ -127,18 +127,15 @@ public class VisualDrink : MonoBehaviour
     {
         if (HardwareScript.SelectedLiquid == OrderScript.LiquidSelection[1]) //Water
         {
-            OrderScript.PourLiquid.color = new Color32(207, 163, 114, 255);
-            OrderScript.CupLiquid.color = new Color32(207, 163, 114, 255);
+            OrderScript.PourLiquid.color = new Color32(137, 224, 236, 50);
         }
         if (HardwareScript.SelectedLiquid == OrderScript.LiquidSelection[2]) //Cow Milk
         {
-            OrderScript.PourLiquid.color = new Color32(70, 41, 25, 255);
-            OrderScript.CupLiquid.color = new Color32(70, 41, 25, 255);
+            OrderScript.PourLiquid.color = new Color32(225, 225, 225, 255);
         }
         if (HardwareScript.SelectedLiquid == OrderScript.LiquidSelection[3]) //Oat Milk
         {
-            OrderScript.PourLiquid.color = new Color32(130, 80, 42, 255);
-            OrderScript.CupLiquid.color = new Color32(130, 80, 42, 255);
+            OrderScript.PourLiquid.color = new Color32(217, 191, 165, 255);
         }
     }
 

@@ -28,11 +28,9 @@ public class Order : MonoBehaviour
     //SpriteRenderer Reference
     [Header("Sprite Renderer References")]
     [SerializeField] public SpriteRenderer PourLiquid;
-    [SerializeField] public SpriteRenderer CupLiquid;
 
     //Animator References
     [Header("Animator References")]
-    public Animator CupAnimator;
     public Animator PourAnimator;
     public Animator FeedbackAnimator;
 

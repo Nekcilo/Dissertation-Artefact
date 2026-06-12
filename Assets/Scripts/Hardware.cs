@@ -116,7 +116,6 @@ public class Hardware : MonoBehaviour
 
     public void ResetAnim()
     {
-        OrderScript.CupAnimator.SetBool("AnimIsPouring", false);
         OrderScript.PourAnimator.SetBool("AnimIsPouring", false);
 
         OrderScript.FeedbackAnimator.SetBool("Pos", false);

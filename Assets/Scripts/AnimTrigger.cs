@@ -11,7 +11,7 @@ public class AnimTrigger : MonoBehaviour
 
     public void EntryPourAnim()
     {
-        OrderScript.CupAnimator.SetBool("AnimIsPouring", true);
+        //OrderScript.CupAnimator.SetBool("AnimIsPouring", true);
     }
 
     public void DrinkFull()
