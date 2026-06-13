@@ -17,7 +17,7 @@ public class Score : MonoBehaviour
 
     [HideInInspector] public float PreviousTime = 0f;
     
-    float BonusTime = 10f;
+    float BonusTime = 15f;
 
     //Script References
     [Header("Script References")]

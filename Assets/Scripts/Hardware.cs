@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Hardware : MonoBehaviour
@@ -38,6 +39,11 @@ public class Hardware : MonoBehaviour
     [SerializeField] GameTimer TimerScript;
     [SerializeField] VisualDrink DrinkSwapScript;
 
+
+    private void Start()
+    {
+        Cursor.visible = false;
+    }
     private void Update()
     {
         //NFC Removed Timer

@@ -14,7 +14,7 @@ public class GameTimer : MonoBehaviour
     //Timer Values
     [Header("Elapsed Time")]
     public float ElapsedTime = 0f;
-    float TimerLength = 60f;
+    float TimerLength = 90f;
 
     //Cooldown Variables
     [Header("Cooldown Timer")]
@@ -59,7 +59,7 @@ public class GameTimer : MonoBehaviour
     {
         if (GameActive)
         {
-            ElapsedTime = Mathf.Clamp(ElapsedTime += Time.deltaTime, 0, 60);
+            ElapsedTime = Mathf.Clamp(ElapsedTime += Time.deltaTime, 0, TimerLength);
             Replay = false;
         }
     }
