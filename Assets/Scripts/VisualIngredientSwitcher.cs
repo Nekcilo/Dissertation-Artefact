@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class VisualIngredientSwitcher : MonoBehaviour
 {
     public GameObject ChocolateIngredient, TeaIngredient, CoffeeIngredient;
+
+    public SpriteRenderer currentSpriteRenderer = null;
 
     [SerializeField] Hardware HardwareScript;
 
@@ -33,7 +37,11 @@ public class VisualIngredientSwitcher : MonoBehaviour
         switch (IngerdientName)
         {
             case "Chocolate":
-                if (ChocolateIngredient != null) ChocolateIngredient.SetActive(true);
+                if (ChocolateIngredient != null)
+                {
+                    ChocolateIngredient.SetActive(true);
+                    currentSpriteRenderer = ChocolateIngredient.GetComponent<SpriteRenderer>();
+                }
                 break;
 
             case "Tea":

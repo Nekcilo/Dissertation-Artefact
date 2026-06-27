@@ -5987,6 +5987,7 @@ GameObject:
   - component: {fileID: 1713078930}
   - component: {fileID: 1713078931}
   - component: {fileID: 1713078932}
+  - component: {fileID: 1713078937}
   - component: {fileID: 1713078925}
   - component: {fileID: 1713078924}
   - component: {fileID: 1713078933}
@@ -6136,6 +6137,7 @@ MonoBehaviour:
   ScoreScript: {fileID: 1713078929}
   TimerScript: {fileID: 1713078930}
   DrinkSwapScript: {fileID: 1713078932}
+  DrinkAnimationsScript: {fileID: 1713078937}
   RoundStarted: 0
 --- !u!114 &1713078929
 MonoBehaviour:
@@ -6224,6 +6226,7 @@ MonoBehaviour:
   Liquid: []
   HardwareScript: {fileID: 1713078927}
   OrderScript: {fileID: 1713078928}
+  DrinkAnimationScript: {fileID: 1713078937}
   DrinkPouring: 0
   ready: 0
   TargetMaskScale: {x: 0, y: 0, z: 0}
@@ -6256,6 +6259,7 @@ MonoBehaviour:
   ChocolateIngredient: {fileID: 514660216}
   TeaIngredient: {fileID: 1647234932}
   CoffeeIngredient: {fileID: 1415043006}
+  currentSpriteRenderer: {fileID: 0}
   HardwareScript: {fileID: 1713078927}
 --- !u!114 &1713078935
 MonoBehaviour:
@@ -6285,6 +6289,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f5290b8557f3643a4da7c6256ccd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HardwareScript: {fileID: 1713078927}
+--- !u!114 &1713078937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544d124ad3190fc49900c562335e41a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VisualDrinkScript: {fileID: 1713078932}
+  VisualIngredientScript: {fileID: 1713078934}
+  VisualLiquidScript: {fileID: 1713078935}
   HardwareScript: {fileID: 1713078927}
 --- !u!1 &1781133979
 GameObject:

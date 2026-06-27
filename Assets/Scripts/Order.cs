@@ -40,6 +40,7 @@ public class Order : MonoBehaviour
     [SerializeField] Score ScoreScript;
     [SerializeField] GameTimer TimerScript;
     [SerializeField] VisualDrink DrinkSwapScript;
+    [SerializeField] DrinkAnimations DrinkAnimationsScript;
 
     //Other Variables
     [HideInInspector] public bool RoundStarted;
@@ -107,6 +108,8 @@ public class Order : MonoBehaviour
         {
             Debug.Log("Drink Check & Game Active");
             //DrinkSwapScript.DrinkSwap();
+
+            DrinkAnimationsScript.ExitDrinkAnim();
 
             if (HardwareScript.SelectedVessel == HardwareScript.RequiredVessel && HardwareScript.SelectedIngredient == HardwareScript.RequiredIngredient && HardwareScript.SelectedLiquid == HardwareScript.RequiredLiquid)
             {

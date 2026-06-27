@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class VisualDrink : MonoBehaviour
 {
     [Header("Vessel References")]
-    [SerializeField] GameObject Mug;
-    [SerializeField] GameObject Cup;
+    [SerializeField] public GameObject Mug;
+    [SerializeField] public GameObject Cup;
 
     [Header("Insert References")]
     [SerializeField] GameObject MugInserts;
@@ -26,6 +26,7 @@ public class VisualDrink : MonoBehaviour
     [Header("Script References")]
     [SerializeField] Hardware HardwareScript;
     [SerializeField] Order OrderScript;
+    [SerializeField] DrinkAnimations DrinkAnimationScript;
 
     public bool DrinkPouring = false;
     public bool ready = false;
@@ -85,16 +86,6 @@ public class VisualDrink : MonoBehaviour
         //Index 10: Iced Chocolate Milk(Cup)
         //Index 11: Chocolate Milk(Cup)
 
-
-        ////Debug Checks
-        //for (int i = 0; i < Vessel.Length; i++)
-        //{
-        //    Debug.Log("Index " + i + ": " + Vessel[i]);
-        //}
-        //for (int i = 0; i < Insert.Length ; i++)
-        //{
-        //    Debug.Log("Index " + i + ": " + Insert[i]);
-        //}
     }
 
     public void ResetVisual()
@@ -109,6 +100,8 @@ public class VisualDrink : MonoBehaviour
 
     public void VesselSwap() //For Visually Changing the Vessel
     {
+        DrinkAnimationScript.EnterDrinkAnim();
+
         switch (HardwareScript.SelectedVessel)
         {
             case "Mug":
