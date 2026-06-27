@@ -8,6 +8,8 @@ public class VisualLiquidSwitcher : MonoBehaviour
 
     [SerializeField] Hardware HardwareScript;
 
+    public SpriteRenderer currentLiquidSR;
+
     private string CurrentLiquid = "None";
 
     private void Start()
@@ -33,15 +35,27 @@ public class VisualLiquidSwitcher : MonoBehaviour
         switch (LiquidType)
         {
             case "Water":
-                if (WaterLiquid != null) WaterLiquid.SetActive(true);
+                if (WaterLiquid != null)
+                {
+                    WaterLiquid.SetActive(true);
+                    currentLiquidSR = WaterLiquid.GetComponent<SpriteRenderer>();
+                }
                 break;
 
             case "Cow":
-                if (CowsMilkLiquid != null) CowsMilkLiquid.SetActive(true);
+                if (CowsMilkLiquid != null)
+                {
+                    CowsMilkLiquid.SetActive(true);
+                    currentLiquidSR = CowsMilkLiquid.GetComponent<SpriteRenderer>();
+                }
                 break;
 
             case "Oat":
-                if (OatMilkLiquid != null) OatMilkLiquid.SetActive(true);
+                if (OatMilkLiquid != null)
+                {
+                    OatMilkLiquid.SetActive(true);
+                    currentLiquidSR = OatMilkLiquid.GetComponent<SpriteRenderer>();
+                }
                 break;
 
             case "None":

@@ -8,7 +8,7 @@ public class VisualIngredientSwitcher : MonoBehaviour
 {
     public GameObject ChocolateIngredient, TeaIngredient, CoffeeIngredient;
 
-    public SpriteRenderer currentSpriteRenderer = null;
+    public SpriteRenderer currentIngredientSR;
 
     [SerializeField] Hardware HardwareScript;
 
@@ -40,16 +40,24 @@ public class VisualIngredientSwitcher : MonoBehaviour
                 if (ChocolateIngredient != null)
                 {
                     ChocolateIngredient.SetActive(true);
-                    currentSpriteRenderer = ChocolateIngredient.GetComponent<SpriteRenderer>();
+                    currentIngredientSR = ChocolateIngredient.GetComponent<SpriteRenderer>();
                 }
                 break;
 
             case "Tea":
-                if (TeaIngredient != null) TeaIngredient.SetActive(true);
+                if (TeaIngredient != null)
+                {
+                    TeaIngredient.SetActive(true);
+                    currentIngredientSR = TeaIngredient.GetComponent<SpriteRenderer>();
+                }
                 break;
 
             case "Coffee":
-                if (CoffeeIngredient != null) CoffeeIngredient.SetActive(true);
+                if (CoffeeIngredient != null)
+                {
+                    CoffeeIngredient.SetActive(true);
+                    currentIngredientSR = CoffeeIngredient.GetComponent<SpriteRenderer>();
+                }
                 break;
 
             case "None":

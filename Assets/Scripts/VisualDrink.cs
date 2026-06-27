@@ -100,7 +100,7 @@ public class VisualDrink : MonoBehaviour
 
     public void VesselSwap() //For Visually Changing the Vessel
     {
-        DrinkAnimationScript.EnterDrinkAnim();
+        //DrinkAnimationScript.EnterDrinkAnim();
 
         switch (HardwareScript.SelectedVessel)
         {

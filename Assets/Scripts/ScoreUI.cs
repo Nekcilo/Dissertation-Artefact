@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class ScoreUI : MonoBehaviour
 {
@@ -24,13 +25,18 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI GoodCount;
     [SerializeField] TextMeshProUGUI BadCount;
 
+    [SerializeField] Image CooldownIndicator;
+
+    [SerializeField] GameTimer GameTimerScript;
+
     public Vector3 OriginalPos;
     Vector3 OffsetPos;
 
-    int alphaenabled = 1;
-    int alphadisabled = 0;
-
     bool isMoveFinished = false;
+
+    float maximum = 255f;
+    float minimum = 0f;
+    float t = 0.0f;
 
     private void Awake()
     {
@@ -71,7 +77,9 @@ public class ScoreUI : MonoBehaviour
     public void ShowUI()
     {
         PostProcessVolume.enabled = true;
-        
+
+        CooldownIndicator.color = new Color32(255, 255, 255, 0);
+
         StartCoroutine(SmoothBlur(1.0f, true));
         StartCoroutine(SmoothMove(OffsetPos, OriginalPos, 1.0f, true));
     }
@@ -85,7 +93,7 @@ public class ScoreUI : MonoBehaviour
         }
         else if (!isMoveFinished)
         {
-            ScoreScreen.alpha = alphadisabled;
+            ScoreScreen.alpha = 0;
             PostProcessVolume.enabled = false;
         }
     }
@@ -160,6 +168,34 @@ public class ScoreUI : MonoBehaviour
 
             isMoveFinished = false;
         }
+    }
+
+    public IEnumerator CooldownFade() //Needs to be revisited
+    {
+        float seconds = 2.5f;
+
+        Debug.Log("Cooldown Fade run");
+
+        while (!GameTimerScript.Replay)
+        {
+            // animate the position of the game object...
+            CooldownIndicator.color = new Color32(255, 255, 255, (byte) Mathf.Lerp(minimum, maximum, t));
+
+            t += Time.deltaTime / seconds;
+
+            if (t > 1.0f)
+            {
+                float temp = maximum;
+                maximum = minimum;
+                minimum = temp;
+
+                t = 0.0f;
+            }
+            
+            yield return null;
+        }
+
+        CooldownIndicator.color = new Color32(255, 255, 255, 0);
     }
 
     float FindLength(TextMeshProUGUI textComponent)

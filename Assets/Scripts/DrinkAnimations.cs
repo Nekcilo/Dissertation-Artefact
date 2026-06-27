@@ -12,43 +12,54 @@ public class DrinkAnimations : MonoBehaviour
 
     Vector3 MugOriginalPos;
     Vector3 CupOriginalPos;
-    Vector3 mugOffsetPos;
-    Vector3 cupOffsetPos;
+
+    //Offsets
+    Vector3 mugOffsetRight;
+    Vector3 cupOffsetRight;
+    Vector3 mugOffsetLeft;
+    Vector3 cupOffsetLeft;
 
 
     float duration = 1.0f;
-    bool isMoveFinished;
+    public bool isMoveFinished;
 
     private void Awake()
     {
         MugOriginalPos = VisualDrinkScript.Mug.transform.position;
         CupOriginalPos = VisualDrinkScript.Cup.transform.position;
 
-        mugOffsetPos = new Vector3(MugOriginalPos.x + 15f, MugOriginalPos.y, MugOriginalPos.z);
-        cupOffsetPos = new Vector3(CupOriginalPos.x + 15f, CupOriginalPos.y, CupOriginalPos.z);
+        mugOffsetRight = new Vector3(MugOriginalPos.x + 15f, MugOriginalPos.y, MugOriginalPos.z);
+        cupOffsetRight = new Vector3(CupOriginalPos.x + 15f, CupOriginalPos.y, CupOriginalPos.z);
+
+        mugOffsetLeft = new Vector3(MugOriginalPos.x - 15f, MugOriginalPos.y, MugOriginalPos.z);
+        cupOffsetLeft = new Vector3(CupOriginalPos.x - 15f, CupOriginalPos.y, CupOriginalPos.z);
     }
 
     public void EnterDrinkAnim()
     {
+        VisualIngredientScript.currentIngredientSR.color = new Color32(255, 255, 255, 0);
+
         if (HardwareScript.SelectedVessel == "Mug")
         {
-            StartCoroutine(SmoothMove(VisualDrinkScript.Mug, VisualDrinkScript.Mug.transform.position, mugOffsetPos, duration, false));
+            StartCoroutine(SmoothMove(VisualDrinkScript.Mug, VisualDrinkScript.Mug.transform.position, mugOffsetLeft, duration, false));
         }
         if (HardwareScript.SelectedVessel == "Cup")
         {
-            StartCoroutine(SmoothMove(VisualDrinkScript.Cup, VisualDrinkScript.Cup.transform.position, cupOffsetPos, duration, false));
+            StartCoroutine(SmoothMove(VisualDrinkScript.Cup, VisualDrinkScript.Cup.transform.position, cupOffsetLeft, duration, false));
         }
     }
 
     public void ExitDrinkAnim()
     {
+        VisualIngredientScript.currentIngredientSR.color = new Color32(255, 255, 255, 255);
+
         if (HardwareScript.SelectedVessel == "Mug")
         {
-            StartCoroutine(SmoothMove(VisualDrinkScript.Mug, VisualDrinkScript.Mug.transform.position, mugOffsetPos, duration, true));
+            StartCoroutine(SmoothMove(VisualDrinkScript.Mug, VisualDrinkScript.Mug.transform.position, mugOffsetRight, duration, true));
         }
         if (HardwareScript.SelectedVessel == "Cup")
         {
-            StartCoroutine(SmoothMove(VisualDrinkScript.Cup, VisualDrinkScript.Cup.transform.position, cupOffsetPos, duration, true));
+            StartCoroutine(SmoothMove(VisualDrinkScript.Cup, VisualDrinkScript.Cup.transform.position, cupOffsetRight, duration, true));
         }
     }
 
@@ -58,15 +69,48 @@ public class DrinkAnimations : MonoBehaviour
         {
             float t = 0.0f;
 
+            while (t <= 1.0f)
+            {
+                t += Time.deltaTime / seconds;
+
+                vessel.transform.position = Vector3.Lerp(startpos, endpos, Mathf.SmoothStep(0.0f, 1.0f, t));
+
+                yield return null;
+            }
+
+            StartCoroutine(SmoothFade(0.1f, isEnter));
+            isMoveFinished = true;
+        }
+        else if (!isEnter)
+        {
+            float t = 0.0f;
 
             while (t <= 1.0f)
             {
                 t += Time.deltaTime / seconds;
 
-                VisualIngredientScript.currentSpriteRenderer.color = new Color32(255, 255, 255, (byte) Mathf.Lerp(255, 0, Mathf.SmoothStep(0.0f, 1.0f, t)));
+                vessel.transform.position = Vector3.Lerp(endpos, startpos, Mathf.SmoothStep(0.0f, 1.0f, t));
 
-                vessel.transform.position = Vector3.Lerp(startpos, endpos, Mathf.SmoothStep(0.0f, 1.0f, t));
-                
+                yield return null;
+            }
+
+            StartCoroutine(SmoothFade(0.1f, isEnter));
+            isMoveFinished = false;
+        }
+    }
+
+    IEnumerator SmoothFade(float seconds, bool isEnter)
+    {
+        if (isEnter)
+        {
+            float t = 0.0f;
+
+            while (t <= 1.0f)
+            {
+                t += Time.deltaTime / seconds;
+
+                VisualIngredientScript.currentIngredientSR.color = new Color32(255, 255, 255, (byte)Mathf.Lerp(255, 0, Mathf.SmoothStep(0.0f, 1.0f, t)));
+
                 yield return null;
             }
 
@@ -80,9 +124,7 @@ public class DrinkAnimations : MonoBehaviour
             {
                 t += Time.deltaTime / seconds;
 
-                VisualIngredientScript.currentSpriteRenderer.color = new Color32(255, 255, 255, (byte)Mathf.Lerp(0, 255, Mathf.SmoothStep(0.0f, 1.0f, t)));
-
-                vessel.transform.position = Vector3.Lerp(endpos, startpos, Mathf.SmoothStep(0.0f, 1.0f, t));
+                VisualIngredientScript.currentIngredientSR.color = new Color32(255, 255, 255, (byte)Mathf.Lerp(0, 255, Mathf.SmoothStep(0.0f, 1.0f, t)));
 
                 yield return null;
             }

@@ -39,7 +39,6 @@ public class Hardware : MonoBehaviour
     [SerializeField] GameTimer TimerScript;
     [SerializeField] VisualDrink DrinkSwapScript;
 
-
     private void Start()
     {
         Cursor.visible = false;
@@ -141,6 +140,7 @@ public class Hardware : MonoBehaviour
         }
         else if (!TimerScript.GameActive && TimerScript.CooldownTimer())
         {
+
             if (TimerScript.HasCalculated && ButtonIdentifier == 1)
             {
                 TimerScript.Replay = true;

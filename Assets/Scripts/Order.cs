@@ -107,10 +107,7 @@ public class Order : MonoBehaviour
         if (TimerScript.GameActive)
         {
             Debug.Log("Drink Check & Game Active");
-            //DrinkSwapScript.DrinkSwap();
-
-            DrinkAnimationsScript.ExitDrinkAnim();
-
+            
             if (HardwareScript.SelectedVessel == HardwareScript.RequiredVessel && HardwareScript.SelectedIngredient == HardwareScript.RequiredIngredient && HardwareScript.SelectedLiquid == HardwareScript.RequiredLiquid)
             {
                 FeedbackAnimator.SetBool("Pos", true);
