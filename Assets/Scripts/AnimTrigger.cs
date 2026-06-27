@@ -8,10 +8,10 @@ public class AnimTrigger : MonoBehaviour
     [Header("Script References")]
     [SerializeField] Order OrderScript;
     [SerializeField] Hardware HardwareScript;
-
+    [SerializeField] VisualDrink VisualDrinkScript;
     public void EntryPourAnim()
     {
-        //OrderScript.CupAnimator.SetBool("AnimIsPouring", true);
+        VisualDrinkScript.DrinkPouring = true;
     }
 
     public void DrinkFull()

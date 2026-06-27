@@ -26,6 +26,9 @@ public class VisualDrink : MonoBehaviour
     [SerializeField] Hardware HardwareScript;
     [SerializeField] Order OrderScript;
 
+    public bool DrinkPouring = false;
+    private bool ready = false;
+
     private Vector3 OriginalMugMaskScale, OriginalCupMaskScale;
 
     private float FillDuration = 2.0f;
@@ -196,8 +199,14 @@ public class VisualDrink : MonoBehaviour
 
         if (TargetIndex != -1 && TargetIndex < Insert.Length && ActiveMask != null)
         {
+            ready = true;
             Insert[TargetIndex].SetActive(true);
             StartCoroutine(FillMask(ActiveMask, TargetMaskScale));
+        }
+
+        if (ready && DrinkPouring)
+        {
+            
         }
     }
 
@@ -216,6 +225,8 @@ public class VisualDrink : MonoBehaviour
         }
         Mask.localScale = TargetScale;
 
+        ready = false;
+        DrinkPouring = false;
         HardwareScript.drinkFull = true;
         OrderScript.PourAnimator.SetBool("AnimIsPouring", false);
     }
