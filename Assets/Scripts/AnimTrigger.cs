@@ -12,6 +12,11 @@ public class AnimTrigger : MonoBehaviour
     public void EntryPourAnim()
     {
         VisualDrinkScript.DrinkPouring = true;
+
+        if (VisualDrinkScript.ready)
+        {
+            StartCoroutine(VisualDrinkScript.FillMask(VisualDrinkScript.ActiveMask, VisualDrinkScript.TargetMaskScale));
+        }
     }
 
     public void DrinkFull()

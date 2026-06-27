@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VisualDrink : MonoBehaviour
 {
@@ -27,7 +28,11 @@ public class VisualDrink : MonoBehaviour
     [SerializeField] Order OrderScript;
 
     public bool DrinkPouring = false;
-    private bool ready = false;
+    public bool ready = false;
+
+    public Vector3 TargetMaskScale = Vector3.zero;
+    public int TargetIndex = -1;
+    public Transform ActiveMask = null;
 
     private Vector3 OriginalMugMaskScale, OriginalCupMaskScale;
 
@@ -156,9 +161,9 @@ public class VisualDrink : MonoBehaviour
             return;
         }
 
-        int TargetIndex = -1;
-        Transform ActiveMask = null;
-        Vector3 TargetMaskScale = Vector3.zero;
+        TargetIndex = -1;
+        ActiveMask = null;
+        TargetMaskScale = Vector3.zero;
 
         if (HardwareScript.SelectedVessel == "Mug")
         {
@@ -199,18 +204,14 @@ public class VisualDrink : MonoBehaviour
 
         if (TargetIndex != -1 && TargetIndex < Insert.Length && ActiveMask != null)
         {
-            ready = true;
             Insert[TargetIndex].SetActive(true);
-            StartCoroutine(FillMask(ActiveMask, TargetMaskScale));
-        }
+            ActiveMask.localScale = new Vector3(TargetMaskScale.x, 0f, TargetMaskScale.y);
 
-        if (ready && DrinkPouring)
-        {
-            
+            ready = true;
         }
     }
 
-    IEnumerator FillMask(Transform Mask, Vector3 TargetScale)
+    public IEnumerator FillMask(Transform Mask, Vector3 TargetScale)
     {
         float ElapsedTime = 0f;
 

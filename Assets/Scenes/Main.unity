@@ -2699,7 +2699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &712962822
 Transform:
   m_ObjectHideFlags: 0
@@ -6225,6 +6225,10 @@ MonoBehaviour:
   HardwareScript: {fileID: 1713078927}
   OrderScript: {fileID: 1713078928}
   DrinkPouring: 0
+  ready: 0
+  TargetMaskScale: {x: 0, y: 0, z: 0}
+  TargetIndex: -1
+  ActiveMask: {fileID: 0}
 --- !u!114 &1713078933
 MonoBehaviour:
   m_ObjectHideFlags: 0
